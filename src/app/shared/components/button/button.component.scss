@@ -1,0 +1,23 @@
+@import '../../../../styles/main';
+
+.custom-button {
+    width: 176px; 
+    height: 55px; 
+    border-radius: $border-radius-sm;
+    background-color: $bg-color-primary; 
+    border: none; 
+    color: $text-color-primary; 
+    font-size: $font-size-sm; 
+    line-height: normal; 
+    text-align: center; 
+    transition: 0.3s;
+
+    &:hover {
+      background-color: darken(#EFEFEF, 10%); 
+      cursor: pointer; 
+    }
+
+    &:active {
+      background-color: darken(#EFEFEF, 20%);
+    }
+}
