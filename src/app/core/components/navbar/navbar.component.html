@@ -1,0 +1,75 @@
+<!-- Small And medium Screens Navbar: Visible Only on Small and Medium Screens -->
+<div *ngIf="isSmallScreen" class="nav-sm-md-wrapper">
+
+  <div class="nav-logo-icons-wrapper">
+    <h1 class="nav-logo">Achilles</h1>
+    <div class="nav-icons-wrapper">
+      <mat-icon fontIcon="favorite_outlined" class="mat-icon-custom"></mat-icon>
+      <mat-icon fontIcon="person_outlined" class="mat-icon-custom"></mat-icon>
+      <mat-icon fontIcon="shopping_cart" class="mat-icon-custom-outline mat-icon-custom"></mat-icon>
+    </div>
+    
+</div>
+  <div class="nav-hamburger-search-wrapper">
+    <div class="nav-category-wrapper" (click)="toggleDropdown()">
+      <svg width="28" height="18" viewBox="0 0 28 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 8.83349H26M2 2.14642H26M2 15.5206H26" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>      
+      <p>Categories</p>
+    </div>
+
+    <div class="dropdown-menu-wrapper" [class.open]="isDropdownOpen">
+      <ul>
+        <li *ngFor="let category of categories" (click)="selectCategory(category)">
+          {{ category }}
+        </li>
+      </ul>
+    </div>
+
+    <mat-form-field appearance="outline" class="search-bar-wrapper">
+        <mat-label>Search for anything</mat-label>
+        <input matInput type="text">
+        <div matSuffix class="search-icon-wrapper">
+          <mat-icon class="search-icon">search</mat-icon>
+        </div>
+    </mat-form-field>
+  </div>
+
+</div>
+
+
+<!-- Desktop Navbar: Visible Only on Large Screens -->
+<div *ngIf="!isSmallScreen" class="nav-lg-wrapper">
+  <h1 class="nav-logo">Achilles</h1>
+
+  <div class="nav-category-dropdown-wrapper">
+    <div class="nav-category-wrapper" (click)="toggleDropdown()">
+      <svg width="28" height="18" viewBox="0 0 28 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 8.83349H26M2 2.14642H26M2 15.5206H26" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>      
+      <p>Categories</p>
+    </div>
+
+    <div class="dropdown-menu-wrapper" [class.open]="isDropdownOpen">
+      <ul>
+        <li *ngFor="let category of categories" (click)="selectCategory(category)">
+          {{ category }}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+    <mat-form-field appearance="outline" class="search-bar-wrapper">
+        <mat-label>Search for anything</mat-label>
+        <input matInput type="text">
+        <div matSuffix class="search-icon-wrapper">
+          <mat-icon class="search-icon">search</mat-icon>
+        </div>
+    </mat-form-field>
+  
+  <div class="nav-icons-wrapper">
+    <mat-icon fontIcon="favorite_outlined" class="mat-icon-custom"></mat-icon>
+    <mat-icon fontIcon="person_outlined" class="mat-icon-custom" (click)="navigateToLogin()"></mat-icon>
+    <mat-icon fontIcon="shopping_cart" class="mat-icon-custom-outline mat-icon-custom"></mat-icon>
+  </div>
+</div>
