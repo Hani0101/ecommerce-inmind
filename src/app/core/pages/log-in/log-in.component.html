@@ -1,0 +1,64 @@
+<div class="login-container">
+  <div class="login-box">
+    <div class="logo-section">
+      <h1 class="logo">Achilles</h1>
+    </div>
+    <h2>Welcome Back</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form">
+      <div class="form-username">
+        <label for="username">Username</label>
+        <input type="text" id="username" formControlName="username" placeholder="Enter your username">
+        <div class="error-message" *ngIf="loginForm.get('username')?.errors?.['required'] && loginForm.get('username')?.touched">
+          Username is required
+        </div>
+      </div>
+
+      <div class="form-password">
+        <label for="password">Password</label>
+        <div class="password-input">
+          <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password" placeholder="Enter your password">
+          <span class="password-toggle" (click)="togglePassword()">
+            <svg width="19" height="16" viewBox="0 0 19 16" fill="none" xmlns="http://www.w3.org/2000/svg" [ngClass]="{'fa-eye-slash': showPassword, 'fa-eye': !showPassword}">
+              <path d="M17.0194 0.881275L16.2835 0.145332C16.0755 -0.0626585 15.6915 -0.0306494 15.4515 0.257296L12.8913 2.80126C11.7392 2.30532 10.4754 2.06532 9.14731 2.06532C5.19519 2.08126 1.77141 4.38523 0.12329 7.69743C0.0272626 7.90542 0.0272626 8.16135 0.12329 8.33734C0.891223 9.90536 2.04329 11.2014 3.4833 12.1773L1.3873 14.3053C1.1473 14.5453 1.11529 14.9293 1.27534 15.1373L2.01128 15.8732C2.21928 16.0812 2.60326 16.0492 2.84326 15.7613L16.8912 1.71339C17.1952 1.47352 17.2272 1.08956 17.0192 0.88155L17.0194 0.881275ZM9.9953 5.71316C9.72329 5.64914 9.43534 5.56919 9.16332 5.56919C7.80327 5.56919 6.71538 6.65721 6.71538 8.01712C6.71538 8.28913 6.7794 8.57708 6.85935 8.8491L5.78724 9.90513C5.46728 9.34518 5.2913 8.72108 5.2913 8.01715C5.2913 5.88918 7.00332 4.17715 9.1313 4.17715C9.83536 4.17715 10.4593 4.35314 11.0193 4.6731L9.9953 5.71316Z" fill="#666666" fill-opacity="0.8"/>
+              <path d="M18.1714 7.69737C17.6114 6.57732 16.8753 5.56939 15.9634 4.75336L12.9874 7.69737V8.01732C12.9874 10.1453 11.2754 11.8573 9.14739 11.8573H8.82744L6.93945 13.7453C7.64351 13.8893 8.37946 13.9853 9.09946 13.9853C13.0516 13.9853 16.4754 11.6813 18.1235 8.35319C18.2675 8.12912 18.2675 7.90521 18.1714 7.6972L18.1714 7.69737Z" fill="#666666" fill-opacity="0.8"/>
+              </svg>
+          </span>
+        </div>
+        <div class="error-message" *ngIf="loginForm.get('password')?.errors?.['required'] && loginForm.get('password')?.touched">
+          Password is required
+        </div>
+        <div class="error-message" *ngIf="loginForm.get('password')?.errors?.['minlength'] && loginForm.get('password')?.touched">
+          Password must be at least 8 characters
+        </div>
+      </div>
+
+      <div class="form-options">
+        <label class="remember-me">
+          <input type="checkbox" formControlName="rememberMe">
+          <span>Remember me</span>
+        </label>
+        <a href="#" class="forgot-password">Forgot Password?</a>
+      </div>
+
+      <button type="submit" class="submit-btn">
+        <span>Sign In</span>
+        <div class="loader" *ngIf="isLoading"></div>
+      </button>
+
+      <div class="social-login">
+        <p>Or continue with</p>
+        <div class="social-buttons">
+          <button type="button" class="social-btn google">
+            <i class="fab fa-google"></i>
+          </button>
+          <button type="button" class="social-btn facebook">
+            <i class="fab fa-facebook-f"></i>
+          </button>
+          <button type="button" class="social-btn apple">
+            <i class="fab fa-apple"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

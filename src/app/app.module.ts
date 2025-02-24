@@ -15,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from './core/core.module';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { CoreModule } from './core/core.module';
   providers: [
     provideAnimationsAsync('noop'),
     provideAnimationsAsync(),
+    CookieService 
   ],
   bootstrap: [AppComponent]
 })
