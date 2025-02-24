@@ -1,0 +1,29 @@
+<div class="sales-section">
+  <div class="top-container">
+    <h1>Shop extraordinary items at special prices</h1>
+    <div class="arrows">
+      <div class="circle-container prev-arrow" (click)="scrollLeft()" [class.disabled]="isPrevDisabled()">
+        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" class="arrow">
+          <path d="M29.002 14.9012H1.00195M1.00195 14.9012L15.002 28.9012M1.00195 14.9012L15.002 0.901154" stroke="#1E1E1E" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="circle-container next-arrow" (click)="scrollRight()" [class.disabled]="isNextDisabled()">
+        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" class="arrow">
+          <path d="M1.00195 14.9011L29.002 14.9011M29.002 14.9011L15.002 0.901123M29.002 14.9011L15.002 28.9011" stroke="#1E1E1E" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slick Carousel -->
+  <ngx-slick-carousel
+    class="carousel"
+    #slickModal="slick-carousel"
+    [config]="slickConfig"
+    (afterChange)="onAfterChange($event)"
+  >
+    <div ngxSlickItem *ngFor="let product of products">
+      <app-product-card [product]="product"></app-product-card>
+    </div>
+  </ngx-slick-carousel>
+</div>
