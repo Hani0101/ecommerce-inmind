@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ProductService } from '../../services/product/product.service';
+import { SaleProductService } from '../../services/sales-product/sale-product.service';
 import { IProduct } from '../../../shared/models/product';
 import { SlickCarouselComponent } from 'ngx-slick-carousel';
 import { Observable } from 'rxjs';
@@ -46,7 +46,7 @@ export class SalesSectionComponent implements OnInit {
 
   @ViewChild('slickModal') slickModal!: SlickCarouselComponent;
 
-  constructor(private productService: ProductService) {}
+  constructor(private saleProductService: SaleProductService) {}
 
   ngOnInit(){
     this.fetchProducts().subscribe({
@@ -60,7 +60,7 @@ export class SalesSectionComponent implements OnInit {
   }
   
   fetchProducts(): Observable<IProduct[]> {
-    return this.productService.getProducts();
+    return this.saleProductService.getProducts();
   }
   
   
