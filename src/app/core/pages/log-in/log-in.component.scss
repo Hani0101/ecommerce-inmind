@@ -1,0 +1,101 @@
+@import '../../../../styles/main';
+
+.login-container {
+  @include login-signup-container();
+}
+
+.login-box {
+  @include flex(center, center, nowrap, column);
+  width: 50%;
+}
+
+.form {
+  @include flex(center, left, nowrap, column);
+  width: 80%;
+}
+
+.logo {
+  @include logo($logo-color, $font-hamakor-book);
+}
+
+h2 {
+  @include sub-title();
+}
+
+.form-username,
+.form-password {
+  @include form-fields();
+
+}
+
+label {
+  @include form-label();
+}
+
+input {
+  @include form-input();
+}
+
+input:focus {
+  border-color: $border-color-primary;
+  outline: none;
+}
+
+.password-input {
+  @include flex(center, center, nowrap);
+}
+
+.password-input input {
+  flex: 1;
+}
+
+.password-toggle {
+  cursor: pointer;
+  margin-left: -25px;
+  @include flex(center, center);
+
+  mat-icon {
+    @include hide-icon();
+  }
+}
+
+.error-message {
+  @include error-message-form();
+
+}
+
+.form-options {
+  @include flex(space-between, center, nowrap);
+  margin-bottom: 20px;
+}
+
+.remember-me {
+  @include flex(center, center, nowrap);
+  color: $text-color-primary;
+
+  span {
+    white-space: nowrap;
+  }
+}
+
+.forgot-password {
+  color: $text-color-primary;
+  font-size: $font-size-xs;
+}
+
+.signup-prompt{
+  @include signup-login-prompt-styles();
+}
+
+@media (max-width: 480px) {
+  .login-box {
+    padding: 20px;
+    margin: 20px;
+  }
+
+  .form-options {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+}

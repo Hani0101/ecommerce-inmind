@@ -1,0 +1,80 @@
+@import '../../../../styles/main';
+
+.signup-container {
+  @include login-signup-container();
+}
+
+.signup-box {
+  @include flex(center, center, nowrap, column);
+  width: 50%;
+}
+
+.form {
+  @include flex(center, left, nowrap, column);
+  width: 80%;
+}
+
+.logo {
+  @include logo($logo-color, $font-hamakor-book);
+}
+
+h2 {
+  @include sub-title();
+}
+
+.form-firstname,
+.form-lastname,
+.form-age,
+.form-username,
+.form-email,
+.form-password,
+.form-confirm-password {
+  @include form-fields();
+}
+
+label {
+  @include form-label();
+}
+
+input {
+  @include form-input();
+}
+
+input:focus {
+  border-color: $border-color-primary;
+  outline: none;
+}
+
+.password-input {
+  @include flex(center, center, nowrap);
+}
+
+.password-input input {
+  flex: 1;
+}
+
+.password-toggle {
+  cursor: pointer;
+  margin-left: -25px;
+  @include flex();
+
+  mat-icon {
+    @include hide-icon();
+  }
+}
+
+
+.error-message {
+  @include error-message-form();
+}
+
+.login-prompt {
+@include signup-login-prompt-styles();
+}
+
+@media (max-width: 480px) {
+  .signup-box {
+    padding: 20px;
+    margin: 20px;
+  }
+}
