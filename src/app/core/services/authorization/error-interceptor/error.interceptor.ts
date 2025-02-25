@@ -23,7 +23,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 
         // Handle 401 Unauthorized
         if (error.status === 401) {
-          this.router.navigate(['/login']);
+          this.router.navigate(['/log-in']);
         }
         // Handle 404 Not Found
         if (error.status === 404) {
