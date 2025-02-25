@@ -1,6 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AuthenticationService } from "../../services/authentication/authentication-service/authentication.service";
+import { HostListener } from '@angular/core';
+import { SubmitButtonStyle } from "../../utils/custom-button-styles";
+import { HoverButtonStyle } from "../../utils/custom-button-styles";
 
 @Component({
   selector: 'app-log-in',
@@ -9,9 +12,11 @@ import { AuthenticationService } from "../../services/authentication/authenticat
   standalone: false
 })
 export class LogInComponent implements OnInit {
+  submitButtonStyle: { [key: string]: string } = SubmitButtonStyle;
+  hoverButtonStyle: { [key: string]: string } = HoverButtonStyle;
   loginForm!: FormGroup;
-  isLoading = false;
   showPassword = false;
+  isHovered = false;
 
   constructor(private fb: FormBuilder, private authService: AuthenticationService) {}
 
@@ -21,11 +26,16 @@ export class LogInComponent implements OnInit {
       password: ["", [Validators.required, Validators.minLength(6)]],
       rememberMe: [false]
     });
+  }
 
-    this.loginForm.statusChanges.subscribe(status => console.log("Form Status:", status));
-    if (this.loginForm.get('username')?.value && this.loginForm.get('password')?.value) {
-      this.loginForm.setErrors(null);
-    }
+ @HostListener('mouseenter')
+  onMouseEnter() {
+    this.isHovered = true;
+  }
+
+  @HostListener('mouseleave')
+  onMouseLeave() {
+    this.isHovered = false;
   }
 
   togglePassword(): void {
@@ -33,16 +43,26 @@ export class LogInComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.isLoading = true; // Show loader
+    //Checks which fields are invalid
+    this.markFormGroupTouched(this.loginForm);
+
     this.authService.login(this.loginForm.get('username')?.value, this.loginForm.get('password')?.value).subscribe(
       (res) => {
         console.log('Login successful:', res);
-        this.isLoading = false; // Hide loader
       },
       (error) => {
         console.error('Login failed:', error);
-        this.isLoading = false; // Hide loader
       }
     );
+  }
+
+  private markFormGroupTouched(formGroup: FormGroup) {
+    Object.values(formGroup.controls).forEach(control => {
+      control.markAsTouched();
+
+      if (control instanceof FormGroup) {
+        this.markFormGroupTouched(control);
+      }
+    });
   }
 }
