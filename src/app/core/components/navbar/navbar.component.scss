@@ -58,7 +58,7 @@
 }
 
 .nav-icons-wrapper {
-  @include flex();
+  @include flex(center, center, nowrap);
   column-gap: 20px;
 
   @media (max-width: 480px) {
@@ -67,17 +67,23 @@
         padding-right: 20px;
     }
 
-  .mat-icon-custom {
-    width: 32px !important;
-    height: 32px !important;
-    transform: scale(1.2);
+  .icon{
+    @include flex(center, center, nowrap);
+    align-content: center;
     border-radius: 20px;
+    height: 42px;
+    width: 42px;
     transition: 0.3s;
-
     &:hover {
       cursor: pointer;
       background-color: $bg-color-light-gray;
     }
+  }
+
+  .mat-icon-custom {
+    transform: scale(1.2);
+    border-radius: 20px;
+    transition: 0.3s;
   }
 
   .mat-icon-custom-outline {
