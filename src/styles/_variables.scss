@@ -1,3 +1,16 @@
+//General Margins
+$margin-lg: 6rem;
+
+$margin-md: 3rem;
+
+$margin-sm: 2rem;
+
+$margin-xs: 1rem;
+
+$margin-2xs: 0.75rem;
+
+$margin-3xs: 0.5rem;
+
 // Margins Top-Bottom
 $margin-top-xlg: 9.1rem;
 $margin-bottom-xlg: 9.1rem;
@@ -11,8 +24,14 @@ $margin-bottom-md: 3rem;
 $margin-top-sm: 2rem;
 $margin-bottom-sm: 2rem;
 
-$margin-top-2xs: 0.5rem;
-$margin-bottom-2xs: 0.5rem;
+$margin-top-xs: 1rem;
+$margin-bottom-xs: 1rem;
+
+$margin-top-2xs: 0.75rem;
+$margin-bottom-2xs: 0.75rem;
+
+$margin-top-3xs: 0.5rem;
+$margin-bottom-3xs: 0.5rem;
 
 //Margins Right-Left
 $margin-right-xlg: 9.1rem;
@@ -30,9 +49,25 @@ $margin-left-sm: 2rem;
 $margin-right-xs: 1rem;
 $margin-left-xs: 1rem;
 
-$margin-right-2xs: 0.5rem;
-$margin-left-2xs: 0.5rem;
+$margin-right-2xs: 0.75rem;
+$margin-left-2xs: 0.75rem;
 
+$margin-right-3xs: 0.5rem;
+$margin-left-3xs: 0.5rem;
+
+
+//General Paddings
+$padding-lg: 6rem;
+
+$padding-md: 3rem;
+
+$padding-sm: 2rem;
+
+$padding-xs: 1rem;
+
+$padding-2xs: 0.75rem;
+
+$padding-3xs: 0.5rem;
 
 //Paddings Right-Left
 $padding-right-lg: 6rem;
@@ -47,8 +82,11 @@ $padding-left-sm: 2rem;
 $padding-right-xs: 1rem;
 $padding-left-xs: 1rem;
 
-$padding-right-2xs: 0.5rem;
-$padding-left-2xs: 0.5rem;
+$padding-right-2xs: 0.75rem;
+$padding-left-2xs: 0.75rem;
+
+$padding-right-3xs: 0.5rem;
+$padding-left-3xs: 0.5rem;
 
 //Typography
 $font-roboto: 'Roboto', sans-serif;
@@ -72,7 +110,7 @@ $bg-color-primary: #EFEFEF;
 $bg-color-secondary: #888888;
 $bg-color-category: #F0BB78;
 $bg-color-sale: #A0E193;
-$bg-color-dark:#1E1E1E;
+$bg-color-dark:#0A0D12;
 $bg-color-deactivated: #4f4d4d;
 $bg-color-light-gray: #cacaca;
 
@@ -100,6 +138,9 @@ $border-color-primary: #0A0D12;
 
 //error color
 $error-color: #dc3545;
+
+//General Colors:
+$light-gray: #cacaca;
 
 
 
