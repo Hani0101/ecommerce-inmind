@@ -47,7 +47,7 @@ export class NavbarComponent implements OnInit {
   }
 
   navigateToLogin() {
-    this.router.navigate(['/login']); 
+    this.router.navigate(['/log-in']); 
   }
 
   @HostListener('window:resize', [])
