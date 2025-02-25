@@ -1,10 +1,10 @@
 @import '../../../../styles/main';
 
-.login-container {
+.signup-container {
   @include login-signup-container();
 }
 
-.login-box {
+.signup-box {
   @include flex(center, center, nowrap, column);
   width: 50%;
 }
@@ -22,10 +22,14 @@ h2 {
   @include sub-title();
 }
 
+.form-firstname,
+.form-lastname,
+.form-age,
 .form-username,
-.form-password {
+.form-email,
+.form-password,
+.form-confirm-password {
   @include form-fields();
-
 }
 
 label {
@@ -52,50 +56,25 @@ input:focus {
 .password-toggle {
   cursor: pointer;
   margin-left: -25px;
-  @include flex(center, center);
+  @include flex();
 
   mat-icon {
     @include hide-icon();
   }
 }
 
+
 .error-message {
   @include error-message-form();
-
 }
 
-.form-options {
-  @include flex(space-between, center, nowrap);
-  margin-bottom: 20px;
-}
-
-.remember-me {
-  @include flex(center, center, nowrap);
-  color: $text-color-primary;
-
-  span {
-    white-space: nowrap;
-  }
-}
-
-.forgot-password {
-  color: $text-color-primary;
-  font-size: $font-size-xs;
-}
-
-.signup-prompt{
-  @include signup-login-prompt-styles();
+.login-prompt {
+@include signup-login-prompt-styles();
 }
 
 @media (max-width: 480px) {
-  .login-box {
+  .signup-box {
     padding: 20px;
     margin: 20px;
-  }
-
-  .form-options {
-    flex-direction: column;
-    gap: 10px;
-    align-items: flex-start;
   }
 }

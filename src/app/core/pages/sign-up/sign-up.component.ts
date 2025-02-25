@@ -1,34 +1,41 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AuthenticationService } from "../../services/authentication/authentication-service/authentication.service";
+import { CustomValidators } from "../../utils/custom-validators";
+import { ISignUpResponse } from "../../models/signup-response";
 import { HostListener } from '@angular/core';
 import { SubmitButtonStyle } from "../../utils/custom-button-styles";
 import { HoverButtonStyle } from "../../utils/custom-button-styles";
 
 @Component({
-  selector: 'app-log-in',
-  templateUrl: './log-in.component.html',
-  styleUrls: ['./log-in.component.scss'],
+  selector: 'app-sign-up',
+  templateUrl: './sign-up.component.html',
+  styleUrls: ['./sign-up.component.scss'],
   standalone: false
 })
-export class LogInComponent implements OnInit {
+export class SignUpComponent implements OnInit {
   submitButtonStyle: { [key: string]: string } = SubmitButtonStyle;
   hoverButtonStyle: { [key: string]: string } = HoverButtonStyle;
-  loginForm!: FormGroup;
+  signupForm!: FormGroup;
   showPassword = false;
   isHovered = false;
 
   constructor(private fb: FormBuilder, private authService: AuthenticationService) {}
 
   ngOnInit(): void {
-    this.loginForm = this.fb.group({
+    this.signupForm = this.fb.group({
+      firstName: ["", [Validators.required]], 
+      lastName: ["", [Validators.required]], 
+      age: ["", [Validators.required, Validators.min(1)]], 
       username: ["", [Validators.required]],
-      password: ["", [Validators.required, Validators.minLength(6)]],
-      rememberMe: [false]
-    });
+      email: ["", [Validators.required, Validators.email]],
+      password: ["", [Validators.required, Validators.minLength(8)]],
+      confirmPassword: ["", [Validators.required]]
+    }, { validators: CustomValidators.passwordMatchValidator });
   }
 
- @HostListener('mouseenter')
+
+  @HostListener('mouseenter')
   onMouseEnter() {
     this.isHovered = true;
   }
@@ -44,14 +51,21 @@ export class LogInComponent implements OnInit {
 
   onSubmit(): void {
     //Checks which fields are invalid
-    this.markFormGroupTouched(this.loginForm);
+    this.markFormGroupTouched(this.signupForm);
 
-    this.authService.login(this.loginForm.get('username')?.value, this.loginForm.get('password')?.value).subscribe(
-      (res) => {
-        console.log('Login successful:', res);
+    if (this.signupForm.invalid) {
+      console.log('Form is invalid. Please fill in all required fields.');
+      return;
+    }
+
+    const { firstName, lastName, age, username, email, password } = this.signupForm.value;
+
+    this.authService.signUp(firstName, lastName, age, username, email, password).subscribe(
+      (res: ISignUpResponse) => {
+        console.log('Signup successful:', res);
       },
-      (error) => {
-        console.error('Login failed:', error);
+      (error: any) => {
+        console.error('Signup failed:', error);
       }
     );
   }
