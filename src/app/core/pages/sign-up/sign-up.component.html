@@ -1,0 +1,98 @@
+<div class="signup-container">
+    <div class="signup-box">
+      <div class="logo-section">
+        <h1 class="logo">Achilles</h1>
+      </div>
+      <h2>Create Your Account</h2>
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="form">
+        <!-- First Name Field -->
+        <div class="form-firstname">
+          <label for="firstName">First Name</label>
+          <input type="text" id="firstName" formControlName="firstName" placeholder="Enter your first name">
+          <div class="error-message" *ngIf="signupForm.get('firstName')?.errors?.['required'] && signupForm.get('firstName')?.touched">
+            First Name is required
+          </div>
+        </div>
+  
+        <!-- Last Name Field -->
+        <div class="form-lastname">
+          <label for="lastName">Last Name</label>
+          <input type="text" id="lastName" formControlName="lastName" placeholder="Enter your last name">
+          <div class="error-message" *ngIf="signupForm.get('lastName')?.errors?.['required'] && signupForm.get('lastName')?.touched">
+            Last Name is required
+          </div>
+        </div>
+  
+        <!-- Age Field -->
+        <div class="form-age">
+          <label for="age">Age</label>
+          <input type="number" id="age" formControlName="age" placeholder="Enter your age">
+          <div class="error-message" *ngIf="signupForm.get('age')?.errors?.['required'] && signupForm.get('age')?.touched">
+            Age is required
+          </div>
+          <div class="error-message" *ngIf="signupForm.get('age')?.errors?.['min'] && signupForm.get('age')?.touched">
+            Age must be at least 1
+          </div>
+        </div>
+  
+        <!-- Username Field -->
+        <div class="form-username">
+          <label for="username">Username</label>
+          <input type="text" id="username" formControlName="username" placeholder="Enter your username">
+          <div class="error-message" *ngIf="signupForm.get('username')?.errors?.['required'] && signupForm.get('username')?.touched">
+            Username is required
+          </div>
+        </div>
+  
+        <!-- Email Field -->
+        <div class="form-email">
+          <label for="email">Email</label>
+          <input type="email" id="email" formControlName="email" placeholder="Enter your email">
+          <div class="error-message" *ngIf="signupForm.get('email')?.errors?.['required'] && signupForm.get('email')?.touched">
+            Email is required
+          </div>
+          <div class="error-message" *ngIf="signupForm.get('email')?.errors?.['email'] && signupForm.get('email')?.touched">
+            Please enter a valid email
+          </div>
+        </div>
+  
+        <!-- Password Field -->
+        <div class="form-password">
+          <label for="password">Password</label>
+          <div class="password-input">
+            <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password" placeholder="Enter your password">
+            <span class="password-toggle" (click)="togglePassword()">
+              <!-- Replace SVG with mat-icon -->
+              <mat-icon>{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </span>
+          </div>
+          <div class="error-message" *ngIf="signupForm.get('password')?.errors?.['required'] && signupForm.get('password')?.touched">
+            Password is required
+          </div>
+          <div class="error-message" *ngIf="signupForm.get('password')?.errors?.['minlength'] && signupForm.get('password')?.touched">
+            Password must be at least 8 characters
+          </div>
+        </div>
+  
+        <!-- Confirm Password Field -->
+        <div class="form-confirm-password">
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" id="confirmPassword" formControlName="confirmPassword" placeholder="Confirm your password">
+          <div class="error-message" *ngIf="signupForm.get('confirmPassword')?.errors?.['required'] && signupForm.get('confirmPassword')?.touched">
+            Confirm Password is required
+          </div>
+          <div class="error-message" *ngIf="signupForm.get('confirmPassword')?.errors?.['passwordMismatch'] && signupForm.get('confirmPassword')?.touched">
+            Passwords do not match
+          </div>
+        </div>
+  
+        <div (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
+            <app-button text="Sign Up" [styles]="isHovered ?  hoverButtonStyle  : submitButtonStyle"></app-button>
+        </div>
+  
+        <div class="login-prompt">
+          <p>Or if you have an account. <a routerLink="/log-in" class="login-link">Log in</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
