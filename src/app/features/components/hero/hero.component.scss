@@ -11,10 +11,7 @@
 
 
 .hero {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
+    @include flex(space-between, center, wrap, row);
     column-gap: 20px;
 }
 
@@ -40,9 +37,7 @@
     }
 
     .left-hero-content {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        @include flex (center, left, nowrap, column);
         margin-right: 20px;
     }
 
@@ -53,10 +48,10 @@
 
 // Right Hero (Secondary Section)
 .right-hero {
-    display: flex;
-    align-items: center;
+    @include flex(left, left, nowrap, column);
     width: 100%;
     max-width: 380px;
+    height: 360px;
     border-radius: 20px;
     transition: 0.3s;
     overflow: hidden;
@@ -76,9 +71,7 @@
         position: absolute;
         color: $text-color-transparent;
         letter-spacing: 0.1em;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
+        @include flex(flex-end, left, wrap, column);
         height: 45%;
         padding-left: 20px;
 
@@ -162,7 +155,7 @@
             padding: 10px;
         }
         h1 {
-            @include heading-style($font-size-sm);
+            @include heading-style($font-size-md);
         }
     }
     .right-hero{
@@ -180,7 +173,6 @@
         img {
             width: 100%;
             height: auto;
-            max-height: 100px;
         }
 
         .left-hero-content {
