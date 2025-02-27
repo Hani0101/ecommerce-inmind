@@ -1,0 +1,7 @@
+<div class="trending-container">
+    <h1>Trending now</h1>
+
+    <div class="trending-products">
+        <app-product-card *ngFor="let product of products | slice:0:10" [product]="product"></app-product-card>
+    </div>
+</div>
