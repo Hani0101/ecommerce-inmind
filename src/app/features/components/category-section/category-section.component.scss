@@ -1,0 +1,204 @@
+@import '../../../../styles/main';
+
+.container-grid {
+    display: grid;
+
+    h1 {
+        grid-row: 1;
+    }
+
+    @media (max-width: 1200px) {
+        @include flex(flex-start, flex-start, nowrap, column); 
+    }
+
+    @media (max-width: 1024px) {
+        width: 700px;
+    }
+
+    @media (max-width: 768px) {
+        width: 565px;
+    }
+
+    @media (max-width: 480px) {
+        width: 405px;
+    }
+}
+
+.skin-care-grid {
+    display: grid;
+    width: 100%;
+    max-width: 600px;
+    background-color: $bg-color-category; 
+    border-radius: $border-radius-md; 
+    grid-column: 1;
+    grid-row: 2;
+    height: 910px;
+
+    @media (max-width: 1200px) {
+        max-width: 1100px;
+        height: 580px;
+    }
+
+    @media (max-width: 1024px) {
+        height: 880px;
+    }
+
+    @media (max-width: 480px) {
+        display: none;
+    }
+}
+
+.skin-care-content {
+    grid-column: 1;
+    grid-row: 1;
+    padding-left: $padding-left-sm; 
+
+    h2 {
+        font-size: $font-size-md; 
+        font-family: $font-robot; 
+        color: $text-color-transparent; 
+        line-height: 40px;
+    }
+
+    h3 {
+        font-family: $font-robot;
+        font-weight: 300;
+        font-size: $font-size-sm; 
+        line-height: 30px;
+        color: $text-color-transparent; 
+    }
+
+    @media (max-width: 1200px){
+        padding-left: $padding-left-md + 1; 
+    }
+
+    @media (max-width: 1024px) {
+        padding-left: $padding-left-lg - 0.5; 
+    }
+
+    @media (max-width: 768px) {
+        padding-left: $padding-left-md + 0.5; 
+    }
+}
+
+.skin-care-img {
+    grid-column: 2;
+    width: 300px;
+    margin-left: $margin-left-lg; 
+
+    @media (max-width: 1024px) {
+        width: 250px;
+    }
+    @media (max-width: 768px) {
+        margin-left: 0px;
+    }
+}
+
+.card-grid {
+    grid-column: 1 / span 2;
+    height: 600px;
+    column-gap: $margin-md; 
+    @include flex(center, center, wrap, column); 
+    position: relative;
+    bottom: 100px;
+    row-gap: $margin-sm; 
+
+    @media (max-width: 1200px) {
+        column-gap: $margin-sm; 
+        height: auto;
+        flex-wrap: nowrap;
+        flex-direction: row;
+    }
+
+    @media (max-width: 1024px) {
+        column-gap: $margin-lg; 
+        bottom: 50px;
+        flex-wrap: wrap;
+    }
+
+    @media (max-width: 768px) {
+        column-gap: $margin-xs; // Use variable
+    }
+}
+
+app-product-card {
+    width: 220px;
+    height: 280px;
+    @include flex(center, center, nowrap); // Use flex mixin
+    border-radius: $border-radius-md; // Use variable
+    background-color: beige;
+
+    transition: 0.3s;
+    &:hover {
+        transform: scale(1.03);
+    }
+}
+
+.category-grid {
+    width: 600px;
+    grid-column: 2;
+    grid-row: 2;
+
+    @media (max-width: 1200px) {
+        width: 1100px;
+    }
+
+    @media (max-width: 1024px) {
+        width: 700px;
+    }
+
+    @media (max-width: 768px) {
+        width: 565px;
+    }
+
+    @media (max-width: 480px) {
+        width: 405px;
+    }
+}
+
+.category-wrapper {
+    @include flex(center, center, wrap); 
+    column-gap: $gap-sm; 
+    row-gap: $gap-md - 0.4; 
+
+    @media (max-width: 1200px) {
+        margin-top: $margin-top-sm; // Use variable
+    }
+
+    @media (max-width: 1024px) {
+        column-gap: 0;
+    }
+
+    @media (max-width: 480px) {
+        flex-wrap: nowrap;
+        overflow: hidden;
+        height: 300px;
+    }
+}
+
+.category-card {
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    @include flex(flex-start, center, nowrap, column); 
+
+    img {
+        width: 240px;
+        height: 240px;
+    }
+
+    h2 {
+        height: 30px;
+        font-family: $font-robot; // Use variable
+        font-weight: 400;
+        font-size: $font-size-sm; // Use variable
+        line-height: 34px;
+        white-space: nowrap;
+    }
+
+    transition: 0.3s;
+    &:hover {
+        transform: scale(1.1);
+        cursor: pointer;
+    }
+}
