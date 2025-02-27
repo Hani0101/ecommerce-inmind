@@ -89,7 +89,8 @@ $padding-right-3xs: 0.5rem;
 $padding-left-3xs: 0.5rem;
 
 //Typography
-$font-roboto: 'Roboto', sans-serif;
+$font-roboto-sans: 'Roboto Mono', sans-serif;
+$font-robot: 'Roboto Mono';
 $font-hamakor-book: 'Hamakor Book', sans-serif;
 
 //Font Sizes
@@ -143,4 +144,7 @@ $error-color: #dc3545;
 $light-gray: #cacaca;
 
 
-
+//Gaps:
+$gap-lg: 6rem;
+$gap-md: 3rem;
+$gap-sm: 1.25rem;
