@@ -95,3 +95,8 @@
       @extend %signup-login-link-styles; 
     }
   }
+
+  @mixin set-width($max-width: 1207px,$width: 100%){
+   max-width: $max-width;
+    width: $width;
+  }
