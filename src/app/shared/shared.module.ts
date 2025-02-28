@@ -3,20 +3,23 @@ import { CommonModule } from '@angular/common';
 import { ButtonComponent } from './components/button/button.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { TruncatePipe } from './pipes/truncate.pipe';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
     ButtonComponent,
     ProductCardComponent,
-    TruncatePipe
+    TruncatePipe,
+    FooterComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
   ],
   exports: [
     ButtonComponent,
     ProductCardComponent,
-    TruncatePipe
+    TruncatePipe,
+    FooterComponent
   ]
 })
 export class SharedModule {}
