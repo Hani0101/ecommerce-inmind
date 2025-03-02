@@ -9,12 +9,13 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { FormsModule } from '@angular/forms';
 
 
+import { CartService } from './services/cart/cart.service';
 @NgModule({
   declarations: [
     HeroComponent,
     SalesSectionComponent,
     CategorySectionComponent,
-    TrendingSectionComponent
+    TrendingSectionComponent,
   ],
   imports: [
     CommonModule,
@@ -27,6 +28,7 @@ import { FormsModule } from '@angular/forms';
     SalesSectionComponent,
     CategorySectionComponent,
     TrendingSectionComponent
-  ]
+  ],
+  providers: [CartService]
 })
 export class FeaturesModule {}
