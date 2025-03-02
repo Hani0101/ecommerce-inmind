@@ -18,31 +18,42 @@ import { CoreModule } from './core/core.module';
 import { CookieService } from 'ngx-cookie-service';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
+import { provideHttpClient } from '@angular/common/http';
+
+import { FeaturesModule  } from './features/features.module';
+
+import { CartEffects } from './state/cart.effects';
+import {cartReducer} from './state/cart.reducer';
+
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { SharedModule } from './shared/shared.module';
+
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
-    CommonModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    BrowserAnimationsModule, 
+    BrowserAnimationsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatIconModule, 
+    MatIconModule,
     ReactiveFormsModule,
     MatCheckboxModule,
     MatButtonModule,
-    CoreModule,
+    CoreModule, 
+    StoreModule.forRoot({cart: cartReducer}),
+    EffectsModule.forRoot([CartEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-
   ],
   providers: [
     provideAnimationsAsync('noop'),
     provideAnimationsAsync(),
-    CookieService 
+    CookieService,
+    provideHttpClient(),
+
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
