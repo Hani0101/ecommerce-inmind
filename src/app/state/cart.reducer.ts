@@ -1,28 +1,27 @@
 import { createReducer, on } from '@ngrx/store';
-import { addToCart, removeFromCart, loadCartSuccess } from './cart.actions';
-import { IProduct } from '../shared/models/product';
+import { loadCartSuccess, addItemToCartSuccess } from './cart.actions';
+import { ICart } from '../shared/models/cart.model';
 
 export interface CartState {
-  products: IProduct[];
+  cart: ICart | null;
 }
 
-export const initialState: CartState = {
-  products: []
+const initialState: CartState = {
+  cart: null,
 };
 
 export const cartReducer = createReducer(
   initialState,
-  on(addToCart, (state, { product }) => {
-    console.log('Adding product to cart:', product);
-    return {...state,
-    products: [...state.products, product]};
+
+  on(loadCartSuccess, (state, { cart }) => ({ ...state, cart })),
+
+  on(addItemToCartSuccess, (state, { cart }) => {
+    return {
+      ...state,
+      cart: {
+        ...cart,
+        cartItems: cart.items?.$values ?? [] 
+      }
+    };
   }),
-  on(removeFromCart, (state, { productId }) => ({
-    ...state,
-    products: state.products.filter(p => p.id !== productId)
-  })),
-  on(loadCartSuccess, (state, { products }) => ({
-    ...state,
-    products
-  }))
-);
+);  
