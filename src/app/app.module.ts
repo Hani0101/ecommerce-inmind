@@ -20,15 +20,16 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { provideHttpClient } from '@angular/common/http';
 
-import { FeaturesModule  } from './features/features.module';
 
 import { CartEffects } from './state/cart.effects';
 import {cartReducer} from './state/cart.reducer';
 
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { SharedModule } from './shared/shared.module';
 
+import { FeaturesModule } from './features/features.module';
+
+import { SharedModule } from './shared/shared.module';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -42,7 +43,9 @@ import { SharedModule } from './shared/shared.module';
     ReactiveFormsModule,
     MatCheckboxModule,
     MatButtonModule,
+    SharedModule,
     CoreModule, 
+    FeaturesModule,
     StoreModule.forRoot({cart: cartReducer}),
     EffectsModule.forRoot([CartEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),

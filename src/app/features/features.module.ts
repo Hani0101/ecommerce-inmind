@@ -7,6 +7,7 @@ import { TrendingSectionComponent } from './components/trending-section/trending
 import { SharedModule } from '../shared/shared.module';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { FormsModule } from '@angular/forms';
+import { CartComponent } from './pages/cart/cart.component';
 
 
 import { CartService } from './services/cart/cart.service';
@@ -16,6 +17,7 @@ import { CartService } from './services/cart/cart.service';
     SalesSectionComponent,
     CategorySectionComponent,
     TrendingSectionComponent,
+    CartComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +29,8 @@ import { CartService } from './services/cart/cart.service';
     HeroComponent,
     SalesSectionComponent,
     CategorySectionComponent,
-    TrendingSectionComponent
+    TrendingSectionComponent,
+    CartComponent
   ],
   providers: [CartService]
 })

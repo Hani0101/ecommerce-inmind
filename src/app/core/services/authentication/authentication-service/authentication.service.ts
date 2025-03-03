@@ -77,6 +77,17 @@ export class AuthenticationService {
     console.log('User data stored in cookies:', user);
   }
 
+  getUserData(): ILoginResponse | ISignUpResponse | null {
+    const userData = this.cookieService.get('user');
+  
+    if (userData) {
+      return JSON.parse(userData); 
+    }
+  
+    return null; 
+  }
+  
+
   logout(): void {
     this.cookieService.delete('authToken', '/');
     this.cookieService.delete('user', '/');
