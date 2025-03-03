@@ -8,7 +8,6 @@ import { CommonModule } from '@angular/common';
 import { AppShellComponent } from './app-shell/app-shell.component';
 import { LogInComponent } from './pages/log-in/log-in.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
-import { FeaturesModule } from '../features/features.module';
 import { SharedModule } from '../shared/shared.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './services/authorization/authorization-interceptor/authorization.interceptor';
@@ -17,29 +16,29 @@ import { RouterModule } from '@angular/router';
 import { ErrorInterceptor } from './services/authorization/error-interceptor/error.interceptor';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
-
-
+import { FeaturesModule } from '../features/features.module';
 @NgModule({
-  declarations: [AppShellComponent, LogInComponent, SignUpComponent, NavbarComponent, NotFoundComponent], 
-  imports: [CommonModule, 
+  declarations: [AppShellComponent, LogInComponent, SignUpComponent, NavbarComponent, NotFoundComponent],
+  imports: [
+    CommonModule,
     ReactiveFormsModule,
+    SharedModule, 
     FeaturesModule,
-    SharedModule,
-    MatFormFieldModule,  
-    MatInputModule,     
+    MatFormFieldModule,
+    MatInputModule,
     MatIconModule,
     RouterModule.forRoot([
       { path: 'log-in', component: LogInComponent },
       { path: 'sign-up', component: SignUpComponent },
       { path: 'not-found', component: NotFoundComponent },
     ]),
-  ],        
-   providers: [
+  ],
+  providers: [
     AuthenticationService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true
+      multi: true,
     },
     {
       provide: HTTP_INTERCEPTORS,
@@ -49,10 +48,10 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: {
-        subscriptSizing: 'dynamic'
-      }
-    }
+        subscriptSizing: 'dynamic',
+      },
+    },
   ],
-  exports: [AppShellComponent, NavbarComponent], 
+  exports: [AppShellComponent, NavbarComponent],
 })
 export class CoreModule {}
