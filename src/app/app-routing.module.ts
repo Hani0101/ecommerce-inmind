@@ -4,6 +4,7 @@ import { AppShellComponent } from '../app/core/app-shell/app-shell.component';
 import { LogInComponent } from './core/pages/log-in/log-in.component';
 import { SignUpComponent } from './core/pages/sign-up/sign-up.component';
 import { NotFoundComponent } from './core/pages/not-found/not-found.component';
+import { CartComponent } from './features/pages/cart/cart.component';
 
 const routes: Routes = [
   { path: 'log-in', component: LogInComponent },
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path: '', component: AppShellComponent },  
   { path: 'not-found', component: NotFoundComponent },
   { path: '**', redirectTo: '/not-found' }, 
+  { path: 'cart', component: CartComponent },
 
 ];
 
