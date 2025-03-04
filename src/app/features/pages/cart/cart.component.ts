@@ -1,51 +1,88 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, forkJoin, of } from 'rxjs';
-import { switchMap, tap, map } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 import { ProductService } from '../../services/product/product.service';
-import { CartService } from '../../services/cart/cart.service';
-import { ICart } from '../../../shared/models/cart.model';
-import { IProduct } from '../../../shared/models/product';
 import { AuthenticationService } from '../../../core/services/authentication/authentication-service/authentication.service';
-import { ICartItem } from '../../../shared/models/cart-item.model';
+import { IProduct } from '../../../shared/models/product'; 
+import { loadCart, incrementItemQuantity, decrementItemQuantity, removeItemFromCart } from '../../../state/cart.actions';
+import { selectCartItems, selectTotalPrice } from '../../../state/cart.selector';
+
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   standalone: false,
-  styleUrls: ['./cart.component.css']
+  styleUrls: ['./cart.component.scss']
 })
 export class CartComponent implements OnInit {
-  cart$!: Observable<ICart | null>;
-  cartProducts$!: Observable<{ product: IProduct; quantity: number }[]>;
+  cartItems$!: Observable<{ product: IProduct; quantity: number }[]>; 
+  totalPrice$!: Observable<number>;
+ 
+  taxRate: number = 10;
+  shipping: number = 5.99;
+  subtotal: number = 0;
+  tax: number = 0;
+  total: number = 0;
 
   constructor(
     private store: Store,
     private productService: ProductService,
-    private cartService: CartService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
   ) {}
 
   ngOnInit(): void {
-    const user = this.authService.getUserData();   
+    this.loadCartData();
+  }
 
-    this.cartProducts$ = this.cartService.getCart(Number(user!.id)).pipe(
-      tap(cart => console.log('Cart from API:', cart)), 
-      switchMap((cart: ICart | null) => {
-        if (!cart || !cart.items?.$values || cart.items.$values.length === 0) {
-          console.log("Cart is empty!");
-          return of([]); 
-        }
-
-        return forkJoin(cart.items.$values.map((cartItem: ICartItem) => 
+  private loadCartData(): void {
+    const user = this.authService.getUserData();
+    if (!user) {
+      console.error("User not found! Please log in.");
+      return;
+    }
+    const userId = Number(user.id);
+    this.store.dispatch(loadCart({ userId }));
+    this.totalPrice$ = this.store.select(selectTotalPrice);
+    this.cartItems$ = this.store.select(selectCartItems).pipe(
+      mergeMap(cartItems =>
+        forkJoin(cartItems.map(cartItem =>
           this.productService.getProductById(cartItem.productId).pipe(
-            map(product => ({
-              product,  
-              quantity: cartItem.quantity
-            }))
+            map(product => ({ product, quantity: cartItem.quantity }))
           )
-        ));
-      }),
-      tap(products => console.log('Final Cart Products:', products)) 
+        ))
+      )
     );
+    this.totalPrice$.subscribe(totalPrice => {
+      this.total = totalPrice + this.tax + this.shipping;
+    });
+  }
+
+  incrementQuantity(productId: number): void {
+    const user = this.authService.getUserData();
+    if (!user) return;
+    this.store.dispatch(incrementItemQuantity({ userId: Number(user.id), productId }));
+    this.loadCartData(); 
+  }
+
+  decrementQuantity(productId: number): void {
+    const user = this.authService.getUserData();
+    if (!user) return;
+
+    this.store.dispatch(decrementItemQuantity({ userId: Number(user.id), productId }));
+    this.loadCartData(); 
+  }
+
+  removeItem(productId: number): void {
+    const user = this.authService.getUserData();
+    if (!user) return;
+    const userId = Number(user.id);
+    this.store.dispatch(removeItemFromCart({ userId, productId }));
+    this.loadCartData();
+  }
+
+  calculateTotals(cartItems: { product: IProduct; quantity: number }[]): void {
+    this.subtotal = cartItems.reduce((sum, item) => sum + (item.product?.price || 0) * item.quantity, 0);
+    this.tax = this.subtotal * (this.taxRate / 100);
+    this.total = this.subtotal + this.tax + this.shipping;
   }
 }
