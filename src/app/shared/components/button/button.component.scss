@@ -1,23 +1,67 @@
 @import '../../../../styles/main';
 
-.custom-button {
-    width: 176px; 
-    height: 55px; 
-    border-radius: $border-radius-sm;
-    background-color: $bg-color-primary; 
-    border: none; 
-    color: $text-color-primary; 
-    font-size: $font-size-sm; 
-    line-height: normal; 
-    text-align: center; 
-    transition: 0.3s;
+button {
+  width: 176px;
+  height: 55px;
+  border-radius: $border-radius-sm;
+  border: none;
+  font-size: $font-size-sm;
+  line-height: normal;
+  text-align: center;
+  transition: ease-in-out 0.3s;
+  cursor: pointer;
+
+  &.theme-primary {
+    background-color: $bg-color-primary;
+    color: $text-color-primary;
 
     &:hover {
-      background-color: darken(#EFEFEF, 10%); 
-      cursor: pointer; 
+      background-color: darken($bg-color-primary, 10%);
     }
 
     &:active {
-      background-color: darken(#EFEFEF, 20%);
+      background-color: darken($bg-color-primary, 20%);
     }
+  }
+
+  &.theme-secondary {
+    background-color: $bg-color-secondary;
+    color: $text-color-primary;
+
+    &:hover {
+      background-color: darken($bg-color-secondary, 10%);
+    }
+
+    &:active {
+      background-color: darken($bg-color-secondary, 20%);
+    }
+  }
+
+  &.theme-danger {
+    background-color: #e74c3c;
+    color: white;
+
+    &:hover {
+      background-color: darken(#e74c3c, 10%);
+    }
+
+    &:active {
+      background-color: darken(#e74c3c, 20%);
+    }
+  }
+
+  &.theme-auth{
+    width: 100%;
+    padding: 12px;
+    background: $bg-color-dark;
+    color: #EFEFEF;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+  &:hover {
+    background: $bg-color-secondary;
+    color: $text-color-primary;
+  }
+ }
 }
