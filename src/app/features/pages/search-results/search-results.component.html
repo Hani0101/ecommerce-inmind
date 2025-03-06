@@ -1,6 +1,5 @@
-<div class="search-results-container">
+<div class="search-results-container section">
     <h2>Search results for "{{ searchQuery }}"</h2>
-  
     <div *ngIf="products.length; else noResults">
       <div class="search-products">
         <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
