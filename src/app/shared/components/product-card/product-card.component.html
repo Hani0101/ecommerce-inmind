@@ -1,6 +1,6 @@
 <div class="product-card">
-  <img [src]="getProductImage()" [alt]="product.title" />
-  <div class="product-details">
+  <img [src]="getProductImage()" [alt]="product.title" (click)="viewProductDetails()" />
+  <div class="product-details" (click)="viewProductDetails()">
       <div class="grid-container">
         <div class="row-one">
           <p class="title">{{ product.title | truncate:3 }}</p>
