@@ -1,7 +1,7 @@
 <div class="login-container">
   <div class="login-box">
     <div class="logo-section">
-      <h1 class="logo">Achilles</h1>
+      <h1 class="logo" (click)="navigateToHome()">Achilles</h1>
     </div>
     <h2>Welcome Back</h2>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form">
@@ -37,9 +37,7 @@
         <a href="#" class="forgot-password">Forgot Password?</a>
       </div>
 
-      <div (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
-        <app-button text="log in" [styles]="isHovered ?  hoverButtonStyle  : submitButtonStyle"></app-button>
-    </div>
+        <app-button text="Log in" theme="auth"></app-button>
 
       <div class="signup-prompt">
         <p>Don't have an account? <a routerLink="/sign-up" class="signup-link">Sign up</a></p>

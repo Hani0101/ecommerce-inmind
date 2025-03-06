@@ -1,10 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AuthenticationService } from "../../services/authentication/authentication-service/authentication.service";
-import { HostListener } from '@angular/core';
-import { SubmitButtonStyle } from "../../utils/custom-button-styles";
-import { HoverButtonStyle } from "../../utils/custom-button-styles";
-
+import { Router } from "@angular/router";
 @Component({
   selector: 'app-log-in',
   templateUrl: './log-in.component.html',
@@ -12,13 +9,10 @@ import { HoverButtonStyle } from "../../utils/custom-button-styles";
   standalone: false
 })
 export class LogInComponent implements OnInit {
-  submitButtonStyle: { [key: string]: string } = SubmitButtonStyle;
-  hoverButtonStyle: { [key: string]: string } = HoverButtonStyle;
   loginForm!: FormGroup;
   showPassword = false;
-  isHovered = false;
 
-  constructor(private fb: FormBuilder, private authService: AuthenticationService) {}
+  constructor(private fb: FormBuilder, private authService: AuthenticationService, private router: Router) {}
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -28,22 +22,11 @@ export class LogInComponent implements OnInit {
     });
   }
 
- @HostListener('mouseenter')
-  onMouseEnter() {
-    this.isHovered = true;
-  }
-
-  @HostListener('mouseleave')
-  onMouseLeave() {
-    this.isHovered = false;
-  }
-
   togglePassword(): void {
     this.showPassword = !this.showPassword;
   }
 
   onSubmit(): void {
-    //Checks which fields are invalid
     this.markFormGroupTouched(this.loginForm);
 
     this.authService.login(this.loginForm.get('username')?.value, this.loginForm.get('password')?.value).subscribe(
@@ -54,6 +37,10 @@ export class LogInComponent implements OnInit {
         console.error('Login failed:', error);
       }
     );
+  }
+
+  navigateToHome(){
+    this.router.navigate(['']); 
   }
 
   private markFormGroupTouched(formGroup: FormGroup) {

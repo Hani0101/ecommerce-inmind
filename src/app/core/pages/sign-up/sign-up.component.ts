@@ -3,9 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AuthenticationService } from "../../services/authentication/authentication-service/authentication.service";
 import { CustomValidators } from "../../utils/custom-validators";
 import { ISignUpResponse } from "../../models/signup-response";
-import { HostListener } from '@angular/core';
-import { SubmitButtonStyle } from "../../utils/custom-button-styles";
-import { HoverButtonStyle } from "../../utils/custom-button-styles";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-sign-up',
@@ -14,13 +12,10 @@ import { HoverButtonStyle } from "../../utils/custom-button-styles";
   standalone: false
 })
 export class SignUpComponent implements OnInit {
-  submitButtonStyle: { [key: string]: string } = SubmitButtonStyle;
-  hoverButtonStyle: { [key: string]: string } = HoverButtonStyle;
   signupForm!: FormGroup;
   showPassword = false;
-  isHovered = false;
 
-  constructor(private fb: FormBuilder, private authService: AuthenticationService) {}
+  constructor(private fb: FormBuilder, private authService: AuthenticationService, private router: Router) {}
 
   ngOnInit(): void {
     this.signupForm = this.fb.group({
@@ -34,16 +29,6 @@ export class SignUpComponent implements OnInit {
     }, { validators: CustomValidators.passwordMatchValidator });
   }
 
-
-  @HostListener('mouseenter')
-  onMouseEnter() {
-    this.isHovered = true;
-  }
-
-  @HostListener('mouseleave')
-  onMouseLeave() {
-    this.isHovered = false;
-  }
 
   togglePassword(): void {
     this.showPassword = !this.showPassword;
@@ -68,6 +53,9 @@ export class SignUpComponent implements OnInit {
         console.error('Signup failed:', error);
       }
     );
+  }
+  navigateToHome(){
+    this.router.navigate(['']); 
   }
 
   private markFormGroupTouched(formGroup: FormGroup) {

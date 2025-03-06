@@ -1,7 +1,7 @@
 <div class="signup-container">
     <div class="signup-box">
       <div class="logo-section">
-        <h1 class="logo">Achilles</h1>
+        <h1 class="logo" (click)="navigateToHome()">Achilles</h1>
       </div>
       <h2>Create Your Account</h2>
       <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="form">
@@ -86,9 +86,7 @@
           </div>
         </div>
   
-        <div (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
-            <app-button text="Sign Up" [styles]="isHovered ?  hoverButtonStyle  : submitButtonStyle"></app-button>
-        </div>
+          <app-button text="Sign up" theme="auth"></app-button>
   
         <div class="login-prompt">
           <p>Or if you have an account. <a routerLink="/log-in" class="login-link">Log in</a></p>
