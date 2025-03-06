@@ -1,9 +1,9 @@
 import { Component, OnInit, HostListener, ViewEncapsulation } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router'; 
+import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { CategoryService } from '../../services/category/category.service';
 import { ICategories } from '../../models/category';
 import { Observable } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-navbar',
@@ -16,9 +16,10 @@ export class NavbarComponent implements OnInit {
   isDropdownOpen = false; 
   isSmallScreen: boolean = false;
   categories: ICategories[] = [];
-  
+  searchQuery: string = '';
 
-  constructor(private http: HttpClient, private router: Router, private categoryService: CategoryService) {}
+
+  constructor(private router: Router, private categoryService: CategoryService, private spinner: NgxSpinnerService  ) {}
 
   ngOnInit(){
     this.fetchCategories().subscribe({
@@ -30,8 +31,22 @@ export class NavbarComponent implements OnInit {
       }
     });   
     this.onResize(); 
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        this.spinner.show();
+      }
+      if (event instanceof NavigationEnd) {
+        setInterval(() => { this.spinner.hide(); }, 2000);
+      }
+    });
   }
 
+  onSearch(): void {
+    if (this.searchQuery.trim()) {
+      this.router.navigate(['/search'], { queryParams: { q: this.searchQuery.trim() } });
+    }
+  }
 
   fetchCategories(): Observable<ICategories[]> {
       return this.categoryService.getCategories();
@@ -41,18 +56,25 @@ export class NavbarComponent implements OnInit {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
 
-  selectCategory(category: ICategories): void {
-    console.log('Selected category:', category);
-    this.isDropdownOpen = false; 
-  }
-
   navigateToLogin() {
     this.router.navigate(['/log-in']); 
+  }
+
+  navigateToCategory(categoryName: ICategories): void {
+    this.isDropdownOpen = false;
+    this.router.navigate([`category/${categoryName}`]);
+  }
+
+  navigateToHome(){
+    this.router.navigate(['']); 
+  }
+
+  navigateToCart(){
+    this.router.navigate(['/cart']); 
   }
 
   @HostListener('window:resize', [])
   onResize(): void {
     this.isSmallScreen = window.innerWidth <= 1024;
-    console.log(this.isSmallScreen);
   }
 }
