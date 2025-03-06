@@ -24,9 +24,20 @@ body { margin: 0; font-family: $font-roboto-sans; background-color: $bg-color-pr
   display: none;
 }
 
-
 .section {
-  padding-top: var(--section-spacing);
-  padding-bottom: var(--section-spacing);
-  border-bottom: 0.5px solid $bg-color-dark;
+  padding-top: var(--section-spacing) !important;
+  padding-bottom: var(--section-spacing) !important;
+  border-bottom: 0.5px solid $bg-color-dark !important;
 }
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-content: center;
+}
+
+app-footer{
+  padding-bottom: 0px !important;
+} 
