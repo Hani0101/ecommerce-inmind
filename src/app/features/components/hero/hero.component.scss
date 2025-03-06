@@ -23,17 +23,22 @@
     flex-direction: row-reverse;
     height: 360px;
     width: 730px;
-    transition: 0.3s;
     overflow: hidden;
+    transition: ease-in-out 0.3s;
 
     &:hover {
         box-shadow: -4px 0 8px 0 #4c5b3b;
         cursor: pointer;
+
+        img{
+            transform: scale(1.1);
+        }
     }
 
     img {
         height: 100%; 
         object-fit: cover;
+        transition: ease-in-out 0.3s;
     }
 
     .left-hero-content {
@@ -53,18 +58,22 @@
     max-width: 380px;
     height: 360px;
     border-radius: 20px;
-    transition: 0.3s;
+    transition: ease-in-out 0.3s;
     overflow: hidden;
 
     &:hover {
         box-shadow: 0 0 10px #715941;
         cursor: pointer;
+        img{
+            transform: scale(1.1);
+        }
     }
 
     img {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        transition: ease-in-out 0.3s;
     }
 
     .right-hero-content {
