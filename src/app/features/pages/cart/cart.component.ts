@@ -73,7 +73,8 @@ export class CartComponent implements OnInit {
     this.store.dispatch(decrementItemQuantity({ userId: Number(user.id), productId }));
     setTimeout(() => {
       this.loadCartData();
-    }, 1000);  }
+    }, 1000);  
+  }
 
   removeItem(productId: number): void {
     const user = this.authService.getUserData();
@@ -82,7 +83,8 @@ export class CartComponent implements OnInit {
     this.store.dispatch(removeItemFromCart({ userId, productId }));
     setTimeout(() => {
       this.loadCartData();
-    }, 1000);  }
+    }, 1000);
+  }
 
   calculateTotals(cartItems: { product: IProduct; quantity: number }[]): void {
     this.subtotal = cartItems.reduce((sum, item) => sum + (item.product?.price || 0) * item.quantity, 0);
@@ -97,5 +99,9 @@ export class CartComponent implements OnInit {
   getDiscountedPrice(price: number, discount: number | null): number {
     if (!price) return 0;
     return discount ? price * (1 - discount / 100) : price;
+  }
+
+  trackByProductId(index: number, item: { product: IProduct; quantity: number }): number {
+    return item.product.id;
   }
 }

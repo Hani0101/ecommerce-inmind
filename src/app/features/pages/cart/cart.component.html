@@ -1,7 +1,7 @@
 <div *ngIf="(cartItems$ | async) as cartItems" class="cart-container">
   <div class="cart-content">
     <div class="cart-items">
-      <div class="cart-item" *ngFor="let item of cartItems">
+      <div class="cart-item" *ngFor="let item of cartItems; trackBy: trackByProductId">
         <div class="item-image">
           <img [src]="getProductImage(item.product)" [alt]="item.product.title" loading="lazy">
         </div>
@@ -51,6 +51,4 @@
       </button>
     </div>
   </div>
-
-  <app-trending-section></app-trending-section>
 </div>
