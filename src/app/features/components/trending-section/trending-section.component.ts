@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SaleProductService } from '../../services/sales-product/sale-product.service';
+import { ProductService } from '../../services/product/product.service';
 
 import { IProduct } from '../../../shared/models/product';
 
@@ -13,12 +13,13 @@ import { Observable } from 'rxjs';
 })
 export class TrendingSectionComponent {
   products: IProduct[] = [];
-  constructor(private TrendingProducts: SaleProductService) {}
+  constructor(private TrendingProducts: ProductService) {}
 
-  ngOnInit(){
+  ngOnInit() {
     this.fetchProducts().subscribe({
-      next: (data: IProduct[]) => {
-        this.products = data;
+      next: (data: { products: IProduct[] }) => {
+        this.products = data.products;
+        console.log('Fetched products AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:', this.products);  // Check data in console
       },
       error: (error) => {
         console.error('Error fetching products:', error);
@@ -26,7 +27,7 @@ export class TrendingSectionComponent {
     });
   }
   
-  fetchProducts(): Observable<IProduct[]> {
-    return this.TrendingProducts.getProducts();
+  fetchProducts(): Observable<{ products: IProduct[] }> {
+    return this.TrendingProducts.getGeneralProducts();
   }
 }
