@@ -1,10 +1,11 @@
-<div class="wrapper">
+<div class="wrapper" *ngIf="!isAuthPage() && !isNotFoundPage()">
     <app-navbar class="section"></app-navbar>
-    <app-hero class="section"></app-hero>
-    <app-sales-section class="section"></app-sales-section>
-    <app-category-section class="section"></app-category-section>
-    <app-trending-section class="section"></app-trending-section>
-    <app-footer class="section"></app-footer>
+    <ngx-spinner type="three-bounce"><p style="color: white;">Loading...</p></ngx-spinner>
+    <router-outlet></router-outlet>
+    <app-footer></app-footer>
 </div>
-    
-    
+
+<div *ngIf="isAuthPage() || isNotFoundPage()">
+    <ngx-spinner type="three-bounce"><p style="color: white;">Loading...</p></ngx-spinner>
+    <router-outlet></router-outlet>
+</div>
