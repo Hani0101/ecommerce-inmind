@@ -3,12 +3,12 @@
     <div class="cart-items">
       <div class="cart-item" *ngFor="let item of cartItems">
         <div class="item-image">
-          <img [src]="item.product.image" [alt]="item.product.title" loading="lazy">
+          <img [src]="getProductImage(item.product)" [alt]="item.product.title" loading="lazy">
         </div>
         <div class="item-details">
           <h3>{{ item.product.title || 'Product unavailable' }}</h3>
           <div class="quantity-controls">
-            <button [disabled]="item.quantity < 0" (click)="decrementQuantity(item.product.id)">
+            <button [disabled]="item.quantity <= 1" (click)="decrementQuantity(item.product.id)">
               <mat-icon>remove</mat-icon>
             </button>
             <span>{{ item.quantity }}</span>
@@ -18,7 +18,9 @@
           </div>
         </div>
         <div class="item-price">
-          <p class="price">${{ (item.product.price || 0) * item.quantity | number:'1.2-2' }}</p>
+          <p class="price">
+            ${{ getDiscountedPrice(item.product.price, item.product.discountPercentage) * item.quantity | number:'1.2-2' }}
+          </p>
           <button class="remove-btn" (click)="removeItem(item.product.id)">
             <mat-icon>delete</mat-icon> Remove
           </button>
