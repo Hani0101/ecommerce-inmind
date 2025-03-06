@@ -16,6 +16,9 @@
 
 .logo {
   @include logo($logo-color, $font-hamakor-book);
+  &:hover{
+    cursor: pointer;
+  }
 }
 
 h2 {
