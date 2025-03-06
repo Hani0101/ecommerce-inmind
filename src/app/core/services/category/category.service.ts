@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { enviromnent } from '../../../../environments/environments';
+import { environment } from '../../../../environments/environments';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ICategories } from '../../models/category';
@@ -8,7 +8,7 @@ import { ICategories } from '../../models/category';
 })
 export class CategoryService {
 
-private catApiUrl = enviromnent.categoryAPI;
+private catApiUrl = environment.categoryAPI;
   
   constructor(private http: HttpClient) { }
 
