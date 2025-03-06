@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { SaleProductService } from '../../services/sales-product/sale-product.service';
+import { ProductService } from '../../services/product/product.service';
 import { IProduct } from '../../../shared/models/product';
 import { Observable } from 'rxjs';
 
-declare var $: any; // Declare jQuery for Slick Carousel
+declare var $: any;
 
 @Component({
   selector: 'app-category-section',
@@ -15,13 +15,12 @@ export class CategorySectionComponent implements OnInit, OnDestroy {
   products: IProduct[] = [];
   private carouselInitialized = false;
 
-  constructor(private ProductService: SaleProductService) {}
+  constructor(private ProductService: ProductService) {}
 
   ngOnInit() {
     this.fetchProducts().subscribe({
-      next: (data: IProduct[]) => {
-        this.products = data;
-        setTimeout(() => this.initOrDestroyCarousel(), 0); 
+      next: (data: { products: IProduct[] }) => {
+        this.products = data.products;
       },
       error: (error) => {
         console.error('Error fetching products:', error);
@@ -75,7 +74,7 @@ export class CategorySectionComponent implements OnInit, OnDestroy {
     this.carouselInitialized = false;
   }
 
-  fetchProducts(): Observable<IProduct[]> {
-    return this.ProductService.getProducts();
+  fetchProducts(): Observable<{ products: IProduct[] }> {
+    return this.ProductService.getGeneralProducts();
   }
 }
