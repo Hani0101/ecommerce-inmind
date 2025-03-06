@@ -1,0 +1,74 @@
+@import '../../../../styles/main';
+
+.category-container{
+    width: 1207px;
+    @media (max-width: 1200px){
+        @include set-width(1100px);
+    }
+
+    @media (max-width: 1024px){
+        @include set-width(700px);
+    }
+
+    @media (max-width: 768px){
+        @include set-width(565px);
+    }
+
+    @media (max-width: 468px){
+        @include set-width(405px);
+        column-gap:10px;
+    }
+}
+
+.category-header {
+    @include flex(flex-end, center, nowrap);
+    margin-bottom: 10px;
+  }
+
+.category-products{
+    row-gap: 20px;
+    @include flex(space-between, center, wrap, row);
+}
+.sort-dropdown {
+    width: 200px;
+  }
+  .order-toggle {
+    display: flex;
+    align-items: center;
+
+    mat-button-toggle {
+      display: flex;
+      align-items: center;
+      gap: 120px;
+      font-weight: 500;
+    }
+  }
+app-product-card{
+    width: 220px;
+    height: 280px;
+    @include flex(center, center, nowrap); 
+        @media (max-width: 468px){
+            width: 170px;
+            height: 240px; 
+        }
+    }
+    
+.filter-btn {
+    @include flex(center, center, nowrap);
+    gap: 8px;
+    background-color: $bg-color-light-gray;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.2s ease-in-out;
+
+    &:hover {
+        background-color: $bg-color-primary;
+    }
+
+    mat-icon {
+        font-size: 20px;
+    }
+    }
