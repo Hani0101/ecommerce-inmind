@@ -61,7 +61,9 @@ export class CartComponent implements OnInit {
     const user = this.authService.getUserData();
     if (!user) return;
     this.store.dispatch(incrementItemQuantity({ userId: Number(user.id), productId }));
-    this.loadCartData(); 
+    setTimeout(() => {
+      this.loadCartData();
+    }, 1000);
   }
 
   decrementQuantity(productId: number): void {
@@ -69,16 +71,18 @@ export class CartComponent implements OnInit {
     if (!user) return;
 
     this.store.dispatch(decrementItemQuantity({ userId: Number(user.id), productId }));
-    this.loadCartData(); 
-  }
+    setTimeout(() => {
+      this.loadCartData();
+    }, 1000);  }
 
   removeItem(productId: number): void {
     const user = this.authService.getUserData();
     if (!user) return;
     const userId = Number(user.id);
     this.store.dispatch(removeItemFromCart({ userId, productId }));
-    this.loadCartData();
-  }
+    setTimeout(() => {
+      this.loadCartData();
+    }, 1000);  }
 
   calculateTotals(cartItems: { product: IProduct; quantity: number }[]): void {
     this.subtotal = cartItems.reduce((sum, item) => sum + (item.product?.price || 0) * item.quantity, 0);
@@ -87,7 +91,7 @@ export class CartComponent implements OnInit {
   }
 
   getProductImage(product: any): string {
-    return product.thumbnail || (product.images && product.images.length > 0 ? product.images[0] : 'assets/default-image.jpg');
+    return product.thumbnail || (product.images && product.images.length > 0 ? product.images[0] : '');
   }
   
   getDiscountedPrice(price: number, discount: number | null): number {
