@@ -3,12 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ICart } from '../../../shared/models/cart.model';
 import { map } from 'rxjs/operators';
-import { enviromnent } from '../../../../environments/environments';
+import { environment } from '../../../../environments/environments';
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
-  private CartUrl = enviromnent.cartAPI; 
+  private CartUrl = environment.cartAPI; 
 
   constructor(private http: HttpClient) {}
   getCart(userId: number): Observable<ICart> {

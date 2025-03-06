@@ -85,4 +85,13 @@ export class CartComponent implements OnInit {
     this.tax = this.subtotal * (this.taxRate / 100);
     this.total = this.subtotal + this.tax + this.shipping;
   }
+
+  getProductImage(product: any): string {
+    return product.thumbnail || (product.images && product.images.length > 0 ? product.images[0] : 'assets/default-image.jpg');
+  }
+  
+  getDiscountedPrice(price: number, discount: number | null): number {
+    if (!price) return 0;
+    return discount ? price * (1 - discount / 100) : price;
+  }
 }

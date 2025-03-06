@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { SaleProductService } from '../../services/sales-product/sale-product.service';
+import { ProductService } from '../../services/product/product.service';
 import { IProduct } from '../../../shared/models/product';
 import { SlickCarouselComponent } from 'ngx-slick-carousel';
 import { Observable } from 'rxjs';
@@ -52,21 +52,21 @@ export class SalesSectionComponent implements OnInit {
 
   @ViewChild('slickModal') slickModal!: SlickCarouselComponent;
 
-  constructor(private saleProductService: SaleProductService) {}
+  constructor(private saleProductService: ProductService) {}
 
-  ngOnInit(){
+  ngOnInit() {
     this.fetchProducts().subscribe({
-      next: (data: IProduct[]) => {
-        this.products = data;
+      next: (data: { products: IProduct[] }) => {
+        this.products = data.products;
+        console.log('Fetched products AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:', this.products);  // Check data in console
       },
       error: (error) => {
         console.error('Error fetching products:', error);
       }
     });
   }
-  
-  fetchProducts(): Observable<IProduct[]> {
-    return this.saleProductService.getProducts();
+  fetchProducts(): Observable<{ products: IProduct[] }> {
+    return this.saleProductService.getGeneralProducts();
   }
   
   

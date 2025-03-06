@@ -1,0 +1,32 @@
+<div class="category-container section" *ngIf="products?.length; else noProducts">
+  <!-- Filter Section -->
+  <div class="category-header">
+    <mat-form-field appearance="outline" class="sort-dropdown">
+      <mat-label>Sort By</mat-label>
+      <mat-select [(value)]="selectedSortBy" (selectionChange)="applySorting()">
+        <mat-option *ngFor="let field of sortFields" [value]="field.value">
+          {{ field.label }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-button-toggle-group [(ngModel)]="selectedOrder" (change)="applySorting()" class="order-toggle">
+      <mat-button-toggle value="asc">
+        <mat-icon>arrow_upward</mat-icon> Asc
+      </mat-button-toggle>
+      <mat-button-toggle value="desc">
+        <mat-icon>arrow_downward</mat-icon> Desc
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+  <!-- Product section -->
+  <div class="category-products">
+    <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
+  </div>
+
+</div>
+
+<!-- No Products Template -->
+<ng-template #noProducts>
+  <h3>No products available in this category :/</h3>
+</ng-template>
