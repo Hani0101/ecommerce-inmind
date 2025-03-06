@@ -15,10 +15,13 @@ import { AuthenticationService } from './services/authentication/authentication-
 import { RouterModule } from '@angular/router';
 import { ErrorInterceptor } from './services/authorization/error-interceptor/error.interceptor';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
-import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
-import { FeaturesModule } from '../features/features.module';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';import { FeaturesModule } from '../features/features.module';
+import { FooterComponent } from './components/footer/footer.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { FormsModule } from '@angular/forms';
+
 @NgModule({
-  declarations: [AppShellComponent, LogInComponent, SignUpComponent, NavbarComponent, NotFoundComponent],
+  declarations: [AppShellComponent, LogInComponent, SignUpComponent, NavbarComponent, NotFoundComponent, FooterComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -27,6 +30,8 @@ import { FeaturesModule } from '../features/features.module';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
+    NgxSpinnerModule,
+    FormsModule,
     RouterModule.forRoot([
       { path: 'log-in', component: LogInComponent },
       { path: 'sign-up', component: SignUpComponent },
@@ -52,6 +57,6 @@ import { FeaturesModule } from '../features/features.module';
       },
     },
   ],
-  exports: [AppShellComponent, NavbarComponent],
+  exports: [AppShellComponent, NavbarComponent, FooterComponent],
 })
 export class CoreModule {}
