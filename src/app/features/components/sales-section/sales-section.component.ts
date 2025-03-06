@@ -1,21 +1,22 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, NgZone } from '@angular/core';
 import { ProductService } from '../../services/product/product.service';
 import { IProduct } from '../../../shared/models/product';
 import { SlickCarouselComponent } from 'ngx-slick-carousel';
 import { Observable } from 'rxjs';
+
 @Component({
   selector: 'app-sales-section',
   standalone: false,
   templateUrl: './sales-section.component.html',
   styleUrl: './sales-section.component.scss'
 })
-export class SalesSectionComponent implements OnInit {
+export class SalesSectionComponent implements OnInit, AfterViewInit {
   products: IProduct[] = [];
   slickConfig: any = {
     slidesToShow: 5,
-    slidesToScroll: 5, 
-    arrows: false, 
-    infinite: false, 
+    slidesToScroll: 5,
+    arrows: false,
+    infinite: false,
     responsive: [
       {
         breakpoint: 1200,
@@ -48,34 +49,43 @@ export class SalesSectionComponent implements OnInit {
     ]
   };
 
-  currentSlideIndex: number = 0; 
+  currentSlideIndex: number = 0;
 
   @ViewChild('slickModal') slickModal!: SlickCarouselComponent;
 
-  constructor(private saleProductService: ProductService) {}
+  constructor(
+    private saleProductService: ProductService,
+    private ngZone: NgZone 
+  ) {}
 
   ngOnInit() {
     this.fetchProducts().subscribe({
       next: (data: { products: IProduct[] }) => {
         this.products = data.products;
-        console.log('Fetched products AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:', this.products);  // Check data in console
       },
       error: (error) => {
         console.error('Error fetching products:', error);
       }
     });
   }
+
+  ngAfterViewInit() {
+  }
+
   fetchProducts(): Observable<{ products: IProduct[] }> {
     return this.saleProductService.getGeneralProducts();
   }
-  
-  
+
   scrollLeft(): void {
-    this.slickModal.slickPrev();
+    this.ngZone.runOutsideAngular(() => {
+      this.slickModal.slickPrev(); 
+    });
   }
 
   scrollRight(): void {
-    this.slickModal.slickNext();
+    this.ngZone.runOutsideAngular(() => {
+      this.slickModal.slickNext(); 
+    });
   }
 
   onAfterChange(event: any): void {
@@ -91,5 +101,4 @@ export class SalesSectionComponent implements OnInit {
     const slidesToShow = this.slickConfig.slidesToShow;
     return this.currentSlideIndex >= totalSlides - slidesToShow;
   }
-
 }
