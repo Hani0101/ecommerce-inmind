@@ -1,0 +1,89 @@
+<!-- Product Container -->
+<div class="product-container">
+  <!-- Image Gallery Section -->
+  <div class="image-gallery">
+    <div class="main-image" (mouseenter)="enableZoom()" (mouseleave)="disableZoom()" (mousemove)="handleZoom($event)">
+      <img #mainImage [src]="selectedImage" [alt]="product?.title">
+    </div>    
+    <div class="thumbnails">
+      <img *ngFor="let img of product?.images" 
+           [src]="img" 
+           (click)="selectImage(img)" 
+           [class.active]="selectedImage === img" 
+           [alt]="product?.title + ' thumbnail'">
+    </div>
+  </div>
+
+  <!-- Product Info Section -->
+  <div class="product-info">
+    <h1 class="product-title">{{ product?.title }}</h1>
+
+    <div class="price-section">
+      <span class="current-price" *ngIf="product">{{ getDiscountedPrice(product) }}</span>
+      <span class="original-price" *ngIf="product?.discountPercentage">{{ product?.price }}</span>
+      <span class="discount" *ngIf="product?.discountPercentage">{{ product?.discountPercentage }}% OFF</span>
+    </div>
+
+    <div class="rating-section">
+      <div class="stars">
+        <mat-icon *ngFor="let star of getStarsArray(product?.rating ?? 0)" [class.filled]="star <= (product?.rating ?? 0)">star</mat-icon>
+      </div>
+      <span class="review-count">({{ product?.reviews?.length }} Reviews)</span>
+    </div>
+
+    <p class="description">{{ product?.description }}</p>
+
+    <div class="action-buttons">
+      <button mat-raised-button color="primary" class="add-to-cart" (click)="addToCart()">
+        <mat-icon>shopping_cart</mat-icon> Add to Cart
+      </button>
+      <button mat-raised-button color="accent" class="buy-now" (click)="buyNow()">
+        Buy Now
+      </button>
+      <button mat-icon-button class="wishlist" (click)="toggleWishlist()">
+        <mat-icon>{{ isInWishlist ? 'favorite' : 'favorite_border' }}</mat-icon>
+      </button>
+    </div>
+
+    <!-- Product Details Accordion -->
+    <mat-accordion class="details-accordion">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Product Details</mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>{{ product?.description }}</p>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Specifications</mat-panel-title>
+        </mat-expansion-panel-header>
+        <ul>
+          <li><strong>Brand:</strong> {{ product?.brand }}</li>
+          <li><strong>SKU:</strong> {{ product?.sku }}</li>
+          <li><strong>Weight:</strong> {{ product?.weight }} kg</li>
+          <li><strong>Dimensions:</strong> {{ product?.dimensions?.width }} x {{ product?.dimensions?.height }} x {{ product?.dimensions?.depth }} cm</li>
+          <li><strong>Warranty:</strong> {{ product?.warrantyInformation }}</li>
+          <li><strong>Shipping:</strong> {{ product?.shippingInformation }}</li>
+          <li><strong>Availability:</strong> {{ product?.availabilityStatus }}</li>
+          <li><strong>Return Policy:</strong> {{ product?.returnPolicy }}</li>          
+        </ul>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <!-- Reviews Section -->
+<div class="reviews-section">
+  <h2>Customer Reviews</h2>
+  <div class="review-card" *ngFor="let review of product?.reviews">
+    <div class="review-header">
+      <span class="reviewer-name">{{ review?.reviewerName }}</span>
+      <div class="review-stars">
+        <mat-icon *ngFor="let star of getStarsArray(review?.rating ?? 0)" class="filled">star</mat-icon>
+      </div>
+    </div>
+    <p class="review-content">{{ review?.comment }}</p>
+  </div>
+</div>
+
+  </div>
+</div>
