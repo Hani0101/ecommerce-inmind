@@ -5,14 +5,14 @@ import { ILoginResponse } from '../../../models/login-response';
 import { ILoginRequest } from '../../../models/login-request';
 import { ISignUpRequest } from '../../../models/signup-request';
 import { ISignUpResponse } from '../../../models/signup-response';
-import { enviromnent } from '../../../../../environments/environments';
+import { environment } from '../../../../../environments/environments';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationApiService {
-  private logInApiUrl = enviromnent.logInApi;
-  private signUpApiUrl = enviromnent.signUpApi;
+  private logInApiUrl = environment.logInApi;
+  private signUpApiUrl = environment.signUpApi;
   constructor(private http: HttpClient) { }
 
   login(request: ILoginRequest): Observable<ILoginResponse> {
