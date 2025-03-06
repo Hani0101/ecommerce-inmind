@@ -2,11 +2,11 @@
 <div *ngIf="isSmallScreen" class="nav-sm-md-wrapper">
 
   <div class="nav-logo-icons-wrapper">
-    <h1 class="nav-logo">Achilles</h1>
+    <h1 class="nav-logo" (click)="navigateToHome()">Achilles</h1>
     <div class="nav-icons-wrapper">
       <mat-icon fontIcon="favorite_outlined" class="mat-icon-custom"></mat-icon>
-      <mat-icon fontIcon="person_outlined" class="mat-icon-custom"></mat-icon>
-      <mat-icon fontIcon="shopping_cart" class="mat-icon-custom-outline mat-icon-custom"></mat-icon>
+      <mat-icon fontIcon="person_outlined" class="mat-icon-custom" (click)="navigateToHome()"></mat-icon>
+      <mat-icon fontIcon="shopping_cart" class="mat-icon-custom-outline mat-icon-custom" (click)="navigateToCart()"></mat-icon>
     </div>
     
 </div>
@@ -20,19 +20,20 @@
 
     <div class="dropdown-menu-wrapper" [class.open]="isDropdownOpen">
       <ul>
-        <li *ngFor="let category of categories" (click)="selectCategory(category)">
+        <li *ngFor="let category of categories"  (click)="navigateToCategory(category)">
           {{ category }}
         </li>
       </ul>
     </div>
 
     <mat-form-field appearance="outline" class="search-bar-wrapper">
-        <mat-label>Search for anything</mat-label>
-        <input matInput type="text">
-        <div matSuffix class="search-icon-wrapper">
-          <mat-icon class="search-icon">search</mat-icon>
-        </div>
+      <mat-label>Search for anything</mat-label>
+          <input matInput type="text" [(ngModel)]="searchQuery" (keyup.enter)="onSearch()">
+          <div matSuffix class="search-icon-wrapper" (click)="onSearch()">
+        <mat-icon class="search-icon">search</mat-icon>
+      </div>
     </mat-form-field>
+    
   </div>
 
 </div>
@@ -40,7 +41,7 @@
 
 <!-- Desktop Navbar: Visible Only on Large Screens -->
 <div *ngIf="!isSmallScreen" class="nav-lg-wrapper">
-  <h1 class="nav-logo">Achilles</h1>
+  <h1 class="nav-logo" (click)="navigateToHome()">Achilles</h1>
 
   <div class="nav-category-dropdown-wrapper">
     <div class="nav-category-wrapper" (click)="toggleDropdown()">
@@ -52,20 +53,20 @@
 
     <div class="dropdown-menu-wrapper" [class.open]="isDropdownOpen">
       <ul>
-        <li *ngFor="let category of categories" (click)="selectCategory(category)">
+        <li *ngFor="let category of categories"  (click)="navigateToCategory(category)">
           {{ category }}
         </li>
       </ul>
     </div>
   </div>
 
-    <mat-form-field appearance="outline" class="search-bar-wrapper">
-        <mat-label>Search for anything</mat-label>
-        <input matInput type="text">
-        <div matSuffix class="search-icon-wrapper">
-          <mat-icon class="search-icon">search</mat-icon>
-        </div>
-    </mat-form-field>
+  <mat-form-field appearance="outline" class="search-bar-wrapper">
+    <mat-label>Search for anything</mat-label>
+        <input matInput type="text" [(ngModel)]="searchQuery" (keyup.enter)="onSearch()">
+        <div matSuffix class="search-icon-wrapper" (click)="onSearch()">
+      <mat-icon class="search-icon">search</mat-icon>
+    </div>
+  </mat-form-field>
   
   <div class="nav-icons-wrapper">
     <div class="icon">
@@ -77,7 +78,7 @@
     </div>
 
     <div class="icon">
-      <mat-icon fontIcon="shopping_cart" class="mat-icon-custom-outline mat-icon-custom"></mat-icon>
+      <mat-icon fontIcon="shopping_cart" class="mat-icon-custom-outline mat-icon-custom" (click)="navigateToCart()"></mat-icon>
     </div>
     
   </div>
