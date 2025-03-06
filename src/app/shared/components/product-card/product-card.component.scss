@@ -4,13 +4,15 @@
     width: 220px;
     height: 280px;
     border-radius: $border-radius-md;
+    background-color: $bg-color-primary;
     border: 0.5px solid $border-color-primary;
     box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.3);
-    
+    transition: ease-in-out 0.3s;
     position: absolute;
 
     &:hover{
         cursor: pointer;
+        transform: scale(1.04);
     }
 
     @media (max-width:468px){

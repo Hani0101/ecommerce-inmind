@@ -29,13 +29,22 @@ export class ProductCardComponent {
     const cartItem: ICartItem = {
       id: 0, //Default values
       userId: Number(user.id), 
-      cartId: 8, //Default values
+      cartId: 0, //Default values
       productId: product.id,
       quantity: 1 //Default values
     };
   
-    console.log("Adding to cart:", cartItem);
     this.store$.dispatch(addItemToCart({ cartItem }));
   }
   
+  getProductImage(): string {
+    return this.product.thumbnail || (this.product.images?.length ? this.product.images[0] : '');
+  }
+
+  getDiscountedPrice(): number {
+    if (this.product.discountPercentage) {
+      return this.product.price * (1 - this.product.discountPercentage / 100);
+    }
+    return this.product.price;
+  }
 }
