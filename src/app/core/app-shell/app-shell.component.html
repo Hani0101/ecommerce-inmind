@@ -1,11 +1,11 @@
-<div class="wrapper" *ngIf="!isAuthPage() && !isNotFoundPage()">
+<div class="wrapper" *ngIf="!isAuthPage() && !isNotFoundPage() && !isAdminPage()">
     <app-navbar class="section"></app-navbar>
     <ngx-spinner type="three-bounce"><p style="color: white;">Loading...</p></ngx-spinner>
     <router-outlet></router-outlet>
     <app-footer class="section"></app-footer>
 </div>
 
-<div *ngIf="isAuthPage() || isNotFoundPage()">
+<div *ngIf="isAuthPage() || isNotFoundPage() || isAdminPage()">
     <ngx-spinner type="three-bounce"><p style="color: white;">Loading...</p></ngx-spinner>
     <router-outlet></router-outlet>
 </div>

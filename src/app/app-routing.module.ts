@@ -8,7 +8,7 @@ import { CategoryComponent } from './features/pages/category/category.component'
 import { LandingPageComponent } from './features/pages/landing-page/landing-page.component';
 import { SearchResultsComponent } from './features/pages/search-results/search-results.component';
 import { SingleProductViewComponent } from './features/pages/single-product-view/single-product-view.component';
-
+import { AdminPageComponent } from './features/pages/admin-page/admin-page.component';
 const routes: Routes = [
   { path: 'log-in', component: LogInComponent },
   { path: 'sign-up', component: SignUpComponent },
@@ -18,6 +18,8 @@ const routes: Routes = [
   { path: 'category/:name', component: CategoryComponent },
   { path: 'search', component: SearchResultsComponent },
   { path: 'product/:id', component: SingleProductViewComponent },
+  { path: 'admin', component: AdminPageComponent },
+  //{ path: '**', redirectTo: 'not-found' }
 
 ];
 

@@ -13,6 +13,10 @@ export class AppShellComponent {
     return this.router.url === '/log-in' || this.router.url === '/sign-up';
   }
 
+  isAdminPage(): boolean {
+    return this.router.url === '/admin';
+  }
+
   isNotFoundPage(): boolean {
     return this.router.url === '/not-found';
   }
