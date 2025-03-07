@@ -31,8 +31,8 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { AdminPageComponent } from './pages/admin-page/admin-page.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { ProductsGridComponent } from './components/products-grid/products-grid.component';
-
-
+import { MyAccountComponent } from './pages/my-account/my-account.component';
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     HeroComponent,
@@ -45,7 +45,8 @@ import { ProductsGridComponent } from './components/products-grid/products-grid.
     SearchResultsComponent,
     SingleProductViewComponent,
     AdminPageComponent,
-    ProductsGridComponent
+    ProductsGridComponent,
+    MyAccountComponent
   ],
   imports: [
     CommonModule,
@@ -68,6 +69,7 @@ import { ProductsGridComponent } from './components/products-grid/products-grid.
     MatDividerModule,
     NgApexchartsModule,
     AgGridModule, 
+    ReactiveFormsModule
   ],
   exports: [
     HeroComponent,
@@ -80,7 +82,8 @@ import { ProductsGridComponent } from './components/products-grid/products-grid.
     SearchResultsComponent,
     SingleProductViewComponent,
     AdminPageComponent,
-    ProductsGridComponent
+    ProductsGridComponent,
+    MyAccountComponent
   ],
   providers: [CartService],
 })

@@ -1,0 +1,78 @@
+<div class="account-container">
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar" [class.sidebar-mobile]="isMobileView">
+      <div class="profile-brief">
+        <img [src]="defaultProfileImage" alt="Profile picture of {{userData.name}}" class="profile-pic">
+        <h3>{{userData.name}}</h3>
+      </div>
+      <ul class="nav-items">
+        <li [class.active]="activeSection === 'overview'" (click)="setActiveSection('overview')"><i class="fas fa-home"></i> Profile Overview</li>
+        <li [class.active]="activeSection === 'personal'" (click)="setActiveSection('personal')"><i class="fas fa-user"></i> Personal Information</li>
+        <li [class.active]="activeSection === 'orders'" (click)="setActiveSection('orders')"><i class="fas fa-shopping-bag"></i> Order History</li>
+        <li [class.active]="activeSection === 'addresses'" (click)="setActiveSection('addresses')"><i class="fas fa-map-marker-alt"></i> Saved Addresses</li>
+        <li [class.active]="activeSection === 'payments'" (click)="setActiveSection('payments')"><i class="fas fa-credit-card"></i> Payment Methods</li>
+        <li [class.active]="activeSection === 'security'" (click)="setActiveSection('security')"><i class="fas fa-shield-alt"></i> Account Security</li>
+        <li (click)="logout()" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</li>
+      </ul>
+    </nav>
+  
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Profile Overview Section -->
+      <section *ngIf="activeSection === 'overview'" class="section-content overview">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <i class="fas fa-box"></i>
+            <h4>Total Orders</h4>
+            <p>{{userData.totalOrders}}</p>
+          </div>
+          <div class="stat-card">
+            <i class="fas fa-heart"></i>
+            <h4>Wishlist Items</h4>
+            <p>{{userData.wishlistCount}}</p>
+          </div>
+        </div>
+      </section>
+  
+      <!-- Personal Information Section -->
+      <section *ngIf="activeSection === 'personal'" class="section-content">
+        <form [formGroup]="personalInfoForm" (ngSubmit)="updatePersonalInfo()">
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" formControlName="fullName" class="form-control">
+              <div *ngIf="personalInfoForm?.get('fullName')?.invalid && personalInfoForm?.get('fullName')?.touched" class="error-message">
+                Please enter a valid name
+              </div>
+            </div>
+            <button type="submit" [disabled]="personalInfoForm.invalid" class="btn-primary">Save Changes</button>
+          </form>
+      </section>
+  
+      <!-- Orders Section -->
+      <section *ngIf="activeSection === 'orders'" class="section-content orders">
+        <div class="filters">
+          <input type="text" formControlName="searchTerm" placeholder="Search orders..." class="search-input">
+          <select formControlName="timeFilter" class="filter-select">
+            <option value="3months">Last 3 Months</option>
+            <option value="all">All Time</option>
+          </select>
+        </div>
+        <div class="orders-grid">
+          <div *ngFor="let order of filteredOrders" class="order-card">
+            <div class="order-header">
+              <span class="order-number">#{{order.id}}</span>
+              <span [class]="'status-badge ' + order.status.toLowerCase()">{{order.status}}</span>
+            </div>
+            <div class="order-details">
+              <p>Date: {{order.date | date:'mediumDate'}}</p>
+              <p>Total: {{order.total}}</p>
+            </div>
+            <div class="order-actions">
+              <button class="btn-track" *ngIf="order.status !== 'Delivered'">Track Order</button>
+              <button class="btn-reorder">Reorder</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
