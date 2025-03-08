@@ -4,6 +4,8 @@ import { AuthenticationService } from "../../services/authentication/authenticat
 import { CustomValidators } from "../../utils/custom-validators";
 import { ISignUpResponse } from "../../models/signup-response";
 import { Router } from "@angular/router";
+import { NgxSpinnerService } from 'ngx-spinner';
+
 
 @Component({
   selector: 'app-sign-up',
@@ -15,7 +17,7 @@ export class SignUpComponent implements OnInit {
   signupForm!: FormGroup;
   showPassword = false;
 
-  constructor(private fb: FormBuilder, private authService: AuthenticationService, private router: Router) {}
+  constructor(private ngxspinner: NgxSpinnerService, private fb: FormBuilder, private authService: AuthenticationService, private router: Router) {}
 
   ngOnInit(): void {
     this.signupForm = this.fb.group({
@@ -37,7 +39,7 @@ export class SignUpComponent implements OnInit {
   onSubmit(): void {
     //Checks which fields are invalid
     this.markFormGroupTouched(this.signupForm);
-
+    this.ngxspinner.show();
     if (this.signupForm.invalid) {
       console.log('Form is invalid. Please fill in all required fields.');
       return;
@@ -47,9 +49,11 @@ export class SignUpComponent implements OnInit {
 
     this.authService.signUp(firstName, lastName, age, username, email, password).subscribe(
       (res: ISignUpResponse) => {
+        this.ngxspinner.hide();
         console.log('Signup successful:', res);
       },
       (error: any) => {
+        this.ngxspinner.hide();
         console.error('Signup failed:', error);
       }
     );

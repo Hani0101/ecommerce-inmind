@@ -4,6 +4,15 @@
       <h1 class="logo" (click)="navigateToHome()">Achilles</h1>
     </div>
     <h2>Welcome Back</h2>
+
+    <!-- Login Failed Message -->
+    <div class="error-box" *ngIf="loginFailed">
+      <div class="error-content">
+        <mat-icon class="error-icon">close</mat-icon>
+        <span>Incorrect username or password. Please try again.</span>
+      </div>
+    </div>
+
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form">
       <div class="form-username">
         <label for="username">Username</label>
