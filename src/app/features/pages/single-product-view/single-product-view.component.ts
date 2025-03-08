@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../services/product/product.service';
 import { IProduct } from '../../../shared/models/product';
@@ -16,7 +16,11 @@ export class SingleProductViewComponent implements OnInit {
   selectedImage: string = '';
   isInWishlist: boolean = false;
 
-  constructor(private route: ActivatedRoute, private productService: ProductService) {}
+  constructor(
+    private route: ActivatedRoute, 
+    private productService: ProductService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     const productId = Number(this.route.snapshot.paramMap.get('id'));
@@ -60,12 +64,14 @@ export class SingleProductViewComponent implements OnInit {
   enableZoom(): void {
     if (this.mainImage) {
       this.mainImage.nativeElement.style.transform = "scale(1.5)";
+      this.cdr.detectChanges(); 
     }
   }
 
   disableZoom(): void {
     if (this.mainImage) {
       this.mainImage.nativeElement.style.transform = "scale(1)";
+      this.cdr.detectChanges(); 
     }
   }
 
@@ -75,6 +81,7 @@ export class SingleProductViewComponent implements OnInit {
       const x = ((event.clientX - left) / width) * 100;
       const y = ((event.clientY - top) / height) * 100;
       this.mainImage.nativeElement.style.transformOrigin = `${x}% ${y}%`;
+      this.cdr.detectChanges(); 
     }
   }
 }

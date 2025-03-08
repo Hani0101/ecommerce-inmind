@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product/product.service';
 
 import { IProduct } from '../../../shared/models/product';
@@ -11,15 +11,15 @@ import { Observable } from 'rxjs';
   templateUrl: './trending-section.component.html',
   styleUrl: './trending-section.component.scss'
 })
-export class TrendingSectionComponent {
+export class TrendingSectionComponent implements OnInit {
   products: IProduct[] = [];
-  constructor(private TrendingProducts: ProductService) {}
-
+  constructor(private TrendingProducts: ProductService, private cdr: ChangeDetectorRef) {}
+  
   ngOnInit() {
     this.fetchProducts().subscribe({
       next: (data: { products: IProduct[] }) => {
         this.products = data.products;
-        console.log('Fetched products AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:', this.products);  // Check data in console
+        this.cdr.markForCheck();
       },
       error: (error) => {
         console.error('Error fetching products:', error);
