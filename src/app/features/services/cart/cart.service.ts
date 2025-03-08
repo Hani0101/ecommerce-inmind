@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ICart } from '../../../shared/models/cart.model';
-import { map } from 'rxjs/operators';
 import { environment } from '../../../../environments/environments';
 @Injectable({
   providedIn: 'root'
@@ -12,25 +11,7 @@ export class CartService {
 
   constructor(private http: HttpClient) {}
   getCart(userId: number): Observable<ICart> {
-    return this.http.get<ICart | null>(`${this.CartUrl}/cart/${userId}`).pipe(
-      map(cart => {
-        if (cart && cart.items && '$values' in cart.items) {
-          return { 
-            ...cart, 
-            cartItems: cart.items.$values 
-          };
-        }
-        return {
-          id: 0,
-          userId,
-          createdAt: '',
-          updatedAt: null,
-          items: { $values: [] },
-          cartItems: [] 
-        };
-      })
-    );
-  }
+    return this.http.get<ICart | null>(`${this.CartUrl}/cart/${userId}`) as Observable<ICart>  }
   
   removeItemFromCart(userId: number, productId: number): Observable<any> {
     return this.http.delete(`${this.CartUrl}/cart/${userId}/items/${productId}`);

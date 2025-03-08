@@ -33,6 +33,7 @@ import { AgGridModule } from 'ag-grid-angular';
 import { ProductsGridComponent } from './components/products-grid/products-grid.component';
 import { MyAccountComponent } from './pages/my-account/my-account.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CheckoutComponent } from './pages/checkout/checkout.component';
 @NgModule({
   declarations: [
     HeroComponent,
@@ -46,7 +47,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     SingleProductViewComponent,
     AdminPageComponent,
     ProductsGridComponent,
-    MyAccountComponent
+    MyAccountComponent,
+    CheckoutComponent
   ],
   imports: [
     CommonModule,
@@ -83,7 +85,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     SingleProductViewComponent,
     AdminPageComponent,
     ProductsGridComponent,
-    MyAccountComponent
+    MyAccountComponent,
+    CheckoutComponent
   ],
   providers: [CartService],
 })

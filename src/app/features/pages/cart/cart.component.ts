@@ -1,6 +1,6 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, forkJoin, of } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { ProductService } from '../../services/product/product.service';
 import { AuthenticationService } from '../../../core/services/authentication/authentication-service/authentication.service';
@@ -61,9 +61,6 @@ export class CartComponent implements OnInit {
     const user = this.authService.getUserData();
     if (!user) return;
     this.store.dispatch(incrementItemQuantity({ userId: Number(user.id), productId }));
-    setTimeout(() => {
-      this.loadCartData();
-    }, 1000);
   }
 
   decrementQuantity(productId: number): void {
@@ -71,9 +68,6 @@ export class CartComponent implements OnInit {
     if (!user) return;
 
     this.store.dispatch(decrementItemQuantity({ userId: Number(user.id), productId }));
-    setTimeout(() => {
-      this.loadCartData();
-    }, 1000);  
   }
 
   removeItem(productId: number): void {
@@ -81,9 +75,6 @@ export class CartComponent implements OnInit {
     if (!user) return;
     const userId = Number(user.id);
     this.store.dispatch(removeItemFromCart({ userId, productId }));
-    setTimeout(() => {
-      this.loadCartData();
-    }, 1000);
   }
 
   calculateTotals(cartItems: { product: IProduct; quantity: number }[]): void {
