@@ -1,0 +1,194 @@
+<div class="checkout-container" *ngIf="(cartItems$ | async) as cartItems">
+    <div class="progress-bar">
+      <div class="progress" [style.width]="progressWidth + '%'"></div>
+      <div class="steps">
+        <div class="step" [class.active]="currentStep >= 1">1. Order Summary</div>
+        <div class="step" [class.active]="currentStep >= 2">2. Shipping</div>
+        <div class="step" [class.active]="currentStep >= 3">3. Payment</div>
+        <div class="step" [class.active]="currentStep >= 4">4. Review</div>
+      </div>
+    </div>
+  
+    <!-- Order Summary Section -->
+    <div class="section" *ngIf="currentStep === 1">
+      <h2>Order Summary</h2>
+      <div class="cart-items">
+        <div class="cart-item" *ngFor="let item of cartItems">
+          <img [src]="getProductImage(item.product)" [alt]="item.product.title" loading="lazy">
+          <div class="item-details">
+            <h3>{{item.product.title}}</h3>
+            <p>Quantity: {{item.quantity}}</p>
+            <p>${{ getDiscountedPrice(item.product.price, item.product.discountPercentage) * item.quantity | number:'1.2-2' }}            </p>
+          </div>
+        </div>
+      </div>
+      <div class="order-totals">
+        <div class="total-row">
+          <span>Subtotal:</span>
+          <span>${{subtotal}}</span>
+        </div>
+        <div class="total-row">
+          <span>Tax:</span>
+          <span>${{tax}}</span>
+        </div>
+        <div class="total-row">
+          <span>Shipping:</span>
+          <span>${{shipping}}</span>
+        </div>
+        <div class="total-row grand-total">
+          <span>Total:</span>
+          <span>${{total}}</span>
+        </div>
+      </div>
+      <button class="next-btn" (click)="nextStep()">Continue to Shipping</button>
+    </div>
+  
+    <!-- Shipping Information Section -->
+    <div class="section" *ngIf="currentStep === 2">
+      <h2>Shipping Information</h2>
+      <form [formGroup]="shippingForm" class="shipping-form">
+        <div class="form-group">
+          <input type="text" formControlName="fullName" placeholder="Full Name">
+          <div class="error" *ngIf="shippingForm.get('fullName')?.touched && shippingForm.get('fullName')?.invalid">
+            Please enter your full name
+          </div>
+        </div>
+        <div class="form-group">
+          <input type="email" formControlName="email" placeholder="Email Address">
+          <div class="error" *ngIf="shippingForm.get('email')?.touched && shippingForm.get('email')?.invalid">
+            Please enter a valid email
+          </div>
+        </div>
+        <div class="form-group">
+          <input type="tel" formControlName="phone" placeholder="Phone Number">
+          <div class="error" *ngIf="shippingForm.get('phone')?.touched && shippingForm.get('phone')?.invalid">
+            Please enter a valid phone number
+          </div>
+        </div>
+        <div class="form-group">
+          <input type="text" formControlName="address" placeholder="Street Address">
+        </div>
+        <div class="form-row">
+          <div class="form-group half">
+            <input type="text" formControlName="city" placeholder="City">
+          </div>
+          <div class="form-group half">
+            <input type="text" formControlName="state" placeholder="State/Province">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group half">
+            <input type="text" formControlName="postal" placeholder="Postal Code">
+          </div>
+          <div class="form-group half">
+            <select formControlName="country">
+              <option value="">Select Country</option>
+              <option *ngFor="let country of countries" [value]="country">{{country}}</option>
+            </select>
+          </div>
+        </div>
+  
+        <div class="shipping-methods">
+          <h3>Shipping Method</h3>
+          <div class="method" *ngFor="let method of shippingMethods">
+            <input type="radio" [id]="method.id" [value]="method.id" formControlName="shippingMethod">
+            <label [for]="method.id">
+              <span class="method-name">{{method.name}}</span>
+              <span class="method-price">${{method.price}}</span>
+              <span class="method-time">{{method.time}}</span>
+            </label>
+          </div>
+        </div>
+      </form>
+      <div class="button-group">
+        <button class="back-btn" (click)="previousStep()">Back</button>
+        <button class="next-btn" (click)="nextStep()" [disabled]="!shippingForm.valid">Continue to Payment</button>
+      </div>
+    </div>
+  
+    <!-- Payment Section -->
+    <div class="section" *ngIf="currentStep === 3">
+      <h2>Payment Method</h2>
+      <form [formGroup]="paymentForm" class="payment-form">
+        <div class="payment-methods">
+          <div class="method" *ngFor="let method of paymentMethods">
+            <input type="radio" [id]="method.id" [value]="method.id" formControlName="paymentMethod">
+            <label [for]="method.id">
+              <span>{{method.name}}</span>
+            </label>
+          </div>
+        </div>
+  
+        <div class="credit-card-form" *ngIf="paymentForm.get('paymentMethod')?.value === 'credit'">
+          <div class="form-group">
+            <input type="text" formControlName="cardNumber" placeholder="Card Number" maxlength="19">
+          </div>
+          <div class="form-row">
+            <div class="form-group half">
+              <input type="text" formControlName="cardName" placeholder="Cardholder Name">
+            </div>
+            <div class="form-group quarter">
+              <input type="text" formControlName="expiry" placeholder="MM/YY" maxlength="5">
+            </div>
+            <div class="form-group quarter">
+              <input type="text" formControlName="cvv" placeholder="CVV" maxlength="4">
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="button-group">
+        <button class="back-btn" (click)="previousStep()">Back</button>
+        <button class="next-btn" (click)="nextStep()" [disabled]="!paymentForm.valid">Review Order</button>
+      </div>
+    </div>
+  
+    <!-- Review Section -->
+    <div class="section" *ngIf="currentStep === 4">
+      <h2>Review Order</h2>
+      <div class="review-section">
+        <div class="review-block">
+          <h3>Shipping Address</h3>
+          <p>{{shippingForm.get('fullName')?.value}}</p>
+          <p>{{shippingForm.get('address')?.value}}</p>
+          <p>{{shippingForm.get('city')?.value}}, {{shippingForm.get('state')?.value}} {{shippingForm.get('postal')?.value}}</p>
+          <p>{{shippingForm.get('country')?.value}}</p>
+          <button class="edit-btn" (click)="editSection(2)">Edit</button>
+        </div>
+  
+        <div class="review-block">
+          <h3>Payment Method</h3>
+          <p>{{getSelectedPaymentMethod()}}</p>
+          <button class="edit-btn" (click)="editSection(3)">Edit</button>
+        </div>
+  
+        <div class="review-block">
+          <h3>Order Summary</h3>
+          <div class="final-totals">
+            <div class="total-row">
+              <span>Items Total:</span>
+              <span>${{subtotal}}</span>
+            </div>
+            <div class="total-row">
+              <span>Shipping:</span>
+              <span>${{shipping}}</span>
+            </div>
+            <div class="total-row">
+              <span>Tax:</span>
+              <span>${{tax}}</span>
+            </div>
+            <div class="total-row grand-total">
+              <span>Order Total:</span>
+              <span>${{total}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="button-group">
+        <button class="back-btn" (click)="previousStep()">Back</button>
+        <button class="place-order-btn" (click)="placeOrder()" [disabled]="isProcessing">
+          <span *ngIf="!isProcessing">Place Order</span>
+          <span class="spinner" *ngIf="isProcessing"></span>
+        </button>
+      </div>
+    </div>
+  </div>
