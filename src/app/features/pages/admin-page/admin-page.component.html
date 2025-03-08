@@ -1,0 +1,185 @@
+<div class="admin-container">
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav mode="side" opened class="sidenav">
+      <div class="brand">
+        <img src="https://images.unsplash.com/photo-1572177812156-58036aae439c?w=100" alt="Admin Logo" />
+        <h2>Admin Panel</h2>
+      </div>
+      <mat-nav-list>
+        <a mat-list-item (click)="toggleView('dashboard')" [class.active]="showDashboard">
+          <mat-icon>dashboard</mat-icon> Dashboard
+        </a>
+        <a mat-list-item (click)="toggleView('products')" [class.active]="showProducts">
+          <mat-icon>inventory_2</mat-icon> Products
+        </a>
+        <a mat-list-item routerLink="/orders" routerLinkActive="active">
+          <mat-icon>shopping_cart</mat-icon> Orders
+        </a>
+        <a mat-list-item routerLink="/users" routerLinkActive="active">
+          <mat-icon>people</mat-icon> Users
+        </a>
+        <a mat-list-item routerLink="/analytics" routerLinkActive="active">
+          <mat-icon>analytics</mat-icon> Analytics
+        </a>
+        <a mat-list-item routerLink="/settings" routerLinkActive="active">
+          <mat-icon>settings</mat-icon> Settings
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <mat-toolbar color="primary">
+        <button mat-icon-button (click)="sidenav.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <span class="toolbar-spacer"></span>
+        <button mat-icon-button [matMenuTriggerFor]="notificationMenu">
+          <mat-icon [matBadge]="notificationCount" matBadgeColor="warn">notifications</mat-icon>
+        </button>
+        <button mat-button [matMenuTriggerFor]="profileMenu" class="profile-button">
+          <img [src]="userAvatar" alt="User Avatar" class="avatar" />
+          {{ userName }}
+        </button>
+      </mat-toolbar>
+
+      <div class="main-content">
+        <!-- Dashboard Section -->
+        <div *ngIf="showDashboard" class="dashboard-grid">
+          <mat-card class="stat-card">
+            <mat-card-content>
+              <div class="stat-header">
+                <mat-icon color="primary">monetization_on</mat-icon>
+                <h3>Total Revenue</h3>
+              </div>
+              <h2>${{ totalRevenue | number }}</h2>
+              <p [class.positive]="revenueGrowth > 0" [class.negative]="revenueGrowth < 0">
+                {{ revenueGrowth }}% from last month
+              </p>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card class="stat-card">
+            <mat-card-content>
+              <div class="stat-header">
+                <mat-icon color="accent">shopping_bag</mat-icon>
+                <h3>Orders</h3>
+              </div>
+              <h2>{{ orderCount | number }}</h2>
+              <p>{{ pendingOrders }} pending</p>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card class="stat-card">
+            <mat-card-content>
+              <div class="stat-header">
+                <mat-icon color="accent">shopping_bag</mat-icon>
+                <h3>Orders</h3>
+              </div>
+              <h2>{{ orderCount | number }}</h2>
+              <p>{{ pendingOrders }} pending</p>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card class="stat-card">
+            <mat-card-content>
+              <div class="stat-header">
+                <mat-icon color="accent">shopping_bag</mat-icon>
+                <h3>Orders</h3>
+              </div>
+              <h2>{{ orderCount | number }}</h2>
+              <p>{{ pendingOrders }} pending</p>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card class="daily-chart-card">
+            <mat-card-header>
+              <mat-card-title>Daily Visitors</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <div id="dailyVisitorsChart" style="height: 400px; width: 100%;"></div>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card class="daily-chart-card">
+            <mat-card-header>
+              <mat-card-title>Daily Sales</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <div id="dailySalesChart" style="height: 400px; width: 100%;"></div>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card class="monthly-chart-card">
+            <mat-card-header>
+              <mat-card-title>Monthly Visitors</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <div id="monthlyVisitorsChart" style="height: 400px; width: 100%;"></div>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card class="monthly-chart-card">
+            <mat-card-header>
+              <mat-card-title>Monthly Sales</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <div id="monthlySalesChart" style="height: 400px; width: 100%;"></div>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card class="products-card">
+            <mat-card-header>
+              <mat-card-title>Top Products</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <mat-list>
+                <mat-list-item *ngFor="let product of topProducts">
+                  <img matListAvatar [src]="product.image" [alt]="product.name" />
+                  <div matLine>{{ product.name }}</div>
+                  <div matLine class="product-stats">
+                    <span>${{ product.revenue | number }}</span>
+                    <span>{{ product.sales }} sales</span>
+                  </div>
+                </mat-list-item>
+              </mat-list>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <!-- Products Section -->
+        <div *ngIf="showProducts" class="products-grid">
+          <app-products-grid></app-products-grid>
+        </div>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+  <!-- Notification and Profile Menus -->
+  <mat-menu #notificationMenu="matMenu">
+    <div class="notification-menu">
+      <mat-list>
+        <mat-list-item *ngFor="let notification of notifications">
+          <mat-icon mat-list-icon [color]="notification.type">{{ notification.icon }}</mat-icon>
+          <div mat-line>{{ notification.message }}</div>
+          <div mat-line class="notification-time">{{ notification.time | date:'shortTime' }}</div>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </mat-menu>
+
+  <mat-menu #profileMenu="matMenu">
+    <button mat-menu-item>
+      <mat-icon>person</mat-icon>
+      <span>Profile</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>settings</mat-icon>
+      <span>Settings</span>
+    </button>
+    <mat-divider></mat-divider>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+      <span>Logout</span>
+    </button>
+  </mat-menu>
+</div>
