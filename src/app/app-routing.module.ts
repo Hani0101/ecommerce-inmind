@@ -9,6 +9,7 @@ import { LandingPageComponent } from './features/pages/landing-page/landing-page
 import { SearchResultsComponent } from './features/pages/search-results/search-results.component';
 import { SingleProductViewComponent } from './features/pages/single-product-view/single-product-view.component';
 import { AdminPageComponent } from './features/pages/admin-page/admin-page.component';
+import { MyAccountComponent } from './features/pages/my-account/my-account.component';
 const routes: Routes = [
   { path: 'log-in', component: LogInComponent },
   { path: 'sign-up', component: SignUpComponent },
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'search', component: SearchResultsComponent },
   { path: 'product/:id', component: SingleProductViewComponent },
   { path: 'admin', component: AdminPageComponent },
+  { path: 'my-account', component: MyAccountComponent },
   //{ path: '**', redirectTo: 'not-found' }
 
 ];
