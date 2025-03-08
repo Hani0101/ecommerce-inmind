@@ -19,7 +19,8 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';im
 import { FooterComponent } from './components/footer/footer.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { FormsModule } from '@angular/forms';
-
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 @NgModule({
   declarations: [AppShellComponent, LogInComponent, SignUpComponent, NavbarComponent, NotFoundComponent, FooterComponent],
   imports: [
@@ -32,6 +33,8 @@ import { FormsModule } from '@angular/forms';
     MatIconModule,
     NgxSpinnerModule,
     FormsModule,
+    MatMenuModule,
+    MatButtonModule,
     RouterModule.forRoot([
       { path: 'log-in', component: LogInComponent },
       { path: 'sign-up', component: SignUpComponent },

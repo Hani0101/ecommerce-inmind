@@ -5,8 +5,24 @@
     <h1 class="nav-logo" (click)="navigateToHome()">Achilles</h1>
     <div class="nav-icons-wrapper">
       <mat-icon fontIcon="favorite_outlined" class="mat-icon-custom"></mat-icon>
-      <mat-icon fontIcon="person_outlined" class="mat-icon-custom" (click)="navigateToHome()"></mat-icon>
-      <mat-icon fontIcon="shopping_cart" class="mat-icon-custom-outline mat-icon-custom" (click)="navigateToCart()"></mat-icon>
+      
+      <!-- Profile Icon or Picture -->
+      <div class="icon pfp-border" (click)="toggleProfileDropdown()" *ngIf="isLoggedIn">
+        <button mat-icon-button [matMenuTriggerFor]="profileMenu">
+        <img
+          [src]="userProfilePicture"
+          alt="Profile Picture"
+          class="profile-picture"
+        />
+      </button>
+      </div>
+        <mat-icon
+          *ngIf="!isLoggedIn || !userProfilePicture"
+          fontIcon="person_outlined"
+          class="mat-icon-custom"
+        ></mat-icon>
+
+    <mat-icon fontIcon="shopping_cart" class="mat-icon-custom-outline mat-icon-custom" (click)="navigateToCart()"></mat-icon>
     </div>
     
 </div>
@@ -18,7 +34,7 @@
       <p>Categories</p>
     </div>
 
-    <div class="dropdown-menu-wrapper" [class.open]="isDropdownOpen">
+    <div class="dropdown-menu-wrapper" [class.open]="isCategoriesDropdownOpen">
       <ul>
         <li *ngFor="let category of categories"  (click)="navigateToCategory(category)">
           {{ category }}
@@ -36,6 +52,18 @@
     
   </div>
 
+  <!-- Profile Dropdown -->
+  <mat-menu #profileMenu="matMenu">
+    <button mat-menu-item (click)="navigateToMyAccount()">
+      <mat-icon>account_circle</mat-icon>
+      <span>My Account</span>
+    </button>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <span>Log Out</span>
+    </button>
+  </mat-menu>
+  
 </div>
 
 
@@ -51,7 +79,7 @@
       <p>Categories</p>
     </div>
 
-    <div class="dropdown-menu-wrapper" [class.open]="isDropdownOpen">
+    <div class="dropdown-menu-wrapper" [class.open]="isCategoriesDropdownOpen">
       <ul>
         <li *ngFor="let category of categories"  (click)="navigateToCategory(category)">
           {{ category }}
@@ -73,8 +101,23 @@
       <mat-icon fontIcon="favorite_outlined" class="mat-icon-custom"></mat-icon>
     </div>
 
-    <div class="icon">
-      <mat-icon fontIcon="person_outlined" class="mat-icon-custom" (click)="navigateToLogin()"></mat-icon>
+    <!-- Profile Icon or Picture -->
+    <div class="icon pfp-border" (click)="toggleProfileDropdown()" *ngIf="isLoggedIn">
+      <button mat-icon-button [matMenuTriggerFor]="profileMenu">
+      <img
+        [src]="userProfilePicture"
+        alt="Profile Picture"
+        class="profile-picture"
+      />
+    </button>
+    </div>
+    
+    <div class="icon" *ngIf="!isLoggedIn || !userProfilePicture">
+      <mat-icon
+        fontIcon="person_outlined"
+        class="mat-icon-custom"
+        (click)="navigateToLogin()"
+      ></mat-icon>
     </div>
 
     <div class="icon">
@@ -82,4 +125,16 @@
     </div>
     
   </div>
+
+    <!-- Profile Dropdown -->
+      <mat-menu #profileMenu="matMenu">
+        <button mat-menu-item (click)="navigateToMyAccount()">
+          <mat-icon>account_circle</mat-icon>
+          <span>My Account</span>
+        </button>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          <span>Log Out</span>
+        </button>
+      </mat-menu>
 </div>

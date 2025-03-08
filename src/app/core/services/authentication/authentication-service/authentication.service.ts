@@ -92,7 +92,6 @@ export class AuthenticationService {
   
     return null; 
   }
-  
 
   logout(): void {
     this.cookieService.delete('authToken', '/');
@@ -137,7 +136,6 @@ export class AuthenticationService {
     console.log("auth service refresh token function triggered");
     if(!refreshToken){
       console.error("No refresh token found");
-      this.router.navigate(['/log-in']);
     }
     return this.authApiService.refreshToken(refreshToken).pipe( //pipe: used to chain(apply multiple operators) switchMap operator
       switchMap((res: ILoginResponse) => {  //switch map: used here to handle the result of the refresh 

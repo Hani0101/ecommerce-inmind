@@ -4,6 +4,7 @@ import { CategoryService } from '../../services/category/category.service';
 import { ICategories } from '../../models/category';
 import { Observable } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { AuthenticationService } from '../../services/authentication/authentication-service/authentication.service';
 
 @Component({
   selector: 'app-navbar',
@@ -13,15 +14,24 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent implements OnInit {
-  isDropdownOpen = false; 
+  isCategoriesDropdownOpen = false; 
+  isProfileDropdownOpen = false; 
+  isLoggedIn : boolean= false; 
   isSmallScreen: boolean = false;
   categories: ICategories[] = [];
   searchQuery: string = '';
-
-
-  constructor(private router: Router, private categoryService: CategoryService, private spinner: NgxSpinnerService  ) {}
+  userProfilePicture: string = '';
+  constructor(private authService: AuthenticationService, private router: Router, private categoryService: CategoryService, private spinner: NgxSpinnerService  ) {}
 
   ngOnInit(){
+
+    this.authService.isCurrentUserLoggedIn().subscribe((isLoggedIn) => {
+      this.isLoggedIn = isLoggedIn; 
+      if (isLoggedIn) {
+        this.userProfilePicture = 'https://fastly.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U'; 
+      }
+    });
+
     this.fetchCategories().subscribe({
       next: (data: ICategories[]) => {
         this.categories = data;
@@ -42,6 +52,13 @@ export class NavbarComponent implements OnInit {
     });
   }
 
+  logout(): void {
+    this.authService.logout();
+    this.isLoggedIn = false;
+    this.isProfileDropdownOpen = false;
+    this.router.navigate(['/log-in']);
+  }
+
   onSearch(): void {
     if (this.searchQuery.trim()) {
       this.router.navigate(['/search'], { queryParams: { q: this.searchQuery.trim() } });
@@ -53,7 +70,11 @@ export class NavbarComponent implements OnInit {
     }
 
   toggleDropdown(): void {
-    this.isDropdownOpen = !this.isDropdownOpen;
+    this.isCategoriesDropdownOpen = !this.isCategoriesDropdownOpen;
+  }
+
+  toggleProfileDropdown(): void {
+    this.isProfileDropdownOpen = !this.isProfileDropdownOpen;
   }
 
   navigateToLogin() {
@@ -61,12 +82,16 @@ export class NavbarComponent implements OnInit {
   }
 
   navigateToCategory(categoryName: ICategories): void {
-    this.isDropdownOpen = false;
+    this.isCategoriesDropdownOpen = false;
     this.router.navigate([`category/${categoryName}`]);
   }
 
   navigateToHome(){
     this.router.navigate(['']); 
+  }
+
+  navigateToMyAccount(){
+    this.router.navigate(['/my-account']); 
   }
 
   navigateToCart(){
