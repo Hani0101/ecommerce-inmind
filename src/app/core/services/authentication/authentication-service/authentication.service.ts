@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject  } from 'rxjs';
+import { Observable, BehaviorSubject, switchMap, of, catchError, map } from 'rxjs';
 import { ILoginRequest } from '../../../models/login-request';
 import { ILoginResponse } from '../../../models/login-response';
 import { ISignUpRequest } from '../../../models/signup-request';
@@ -15,8 +15,6 @@ export class AuthenticationService {
 
 
   constructor(private authApiService: AuthenticationApiService,private cookieService: CookieService, private router: Router) { 
-      console.log("logged in? ", this.isLoggedIn());
-      console.log("token: ", this.getAuthToken());  
     }
 
 
@@ -24,18 +22,24 @@ export class AuthenticationService {
     const requestbody: ILoginRequest = {
       username,
       password,
-      expiresInMins: 30
+      expiresInMins: 1
     };
 
     const response: Observable<ILoginResponse> = this.authApiService.login(requestbody);
-    response.subscribe(
-      (res) => {
+    response.subscribe({
+      next: (res) => {
         this.setAuthToken(res.accessToken);
+        this.setRefreshToken(res.refreshToken);
         this.setUserData(res); 
-        this.router.navigate(['/']);
-      }
-    );
-    console.log("response body: ", response);
+      },
+    error: (error) => {
+    console.error('Login failed:', error);
+    },
+    complete: () => {
+      console.log('Login successful');
+      this.router.navigate(['/']);
+    }
+  });
     return response;
   }
 
@@ -51,16 +55,18 @@ export class AuthenticationService {
     };
 
     const response: Observable<ISignUpResponse> = this.authApiService.signUp(requestBody);
-    response.subscribe(
-      (res) => {
-        console.log('Sign-up successful:', res);
-        this.router.navigate(['/']);
-        this.setUserData(res); 
+    response.subscribe({
+      next: (res) => {
+        this.setUserData(res);
       },
-      (error) => {
+      error: (error) => {
         console.error('Sign-up failed:', error);
-      }
-    );
+      },
+      complete: () => {
+        console.log('Sign-up successful');
+        this.router.navigate(['/']);
+      },
+    });
 
     console.log('Sign-up response body:', response);
     return response;
@@ -90,23 +96,58 @@ export class AuthenticationService {
 
   logout(): void {
     this.cookieService.delete('authToken', '/');
+    this.cookieService.delete('refreshToken', '/');
     this.cookieService.delete('user', '/');
     sessionStorage.clear();
     console.log('User data cleared. Logged out successfully.');
   }
 
-  isLoggedIn(): boolean {
-    if (this.getAuthToken()) {
-      return true;
-    }
-    return false;
+
+  isCurrentUserLoggedIn(): Observable<boolean> {
+    return this.authApiService.getCurrentUser().pipe(
+      map((user) => {
+        console.log('User data from isCurrentUserLoggedIn:', user);
+        return !!user; //converts the user object to a boolean value
+      }),
+      catchError((err) => {
+        console.error('Error fetching current user:', err);
+        return of(false);
+      })
+    );
   }
 
-  getAuthToken(): string {
+  getAccessToken(): string {
     return this.cookieService.get('authToken');
   }
 
   private setAuthToken(token: string): void {
     this.cookieService.set('authToken', token, 1, '/');
   }
+
+  getRefreshToken(): string {
+    return this.cookieService.get('refreshToken');
+  }
+
+  private setRefreshToken(token: string): void {
+    this.cookieService.set('refreshToken', token, 1, '/');
+  }
+
+  refreshToken(): Observable<ILoginResponse>{
+    const refreshToken = this.getRefreshToken();
+    console.log("auth service refresh token function triggered");
+    if(!refreshToken){
+      console.error("No refresh token found");
+      this.router.navigate(['/log-in']);
+    }
+    return this.authApiService.refreshToken(refreshToken).pipe( //pipe: used to chain(apply multiple operators) switchMap operator
+      switchMap((res: ILoginResponse) => {  //switch map: used here to handle the result of the refresh 
+                                            //token and to return an observable (we did not use tap here because we want to return an observable to the interceptor)
+        
+        console.log("attempting to refresh token", res);
+        this.setAuthToken(res.accessToken);
+        this.setRefreshToken(res.refreshToken);
+        return of(res);
+    })
+  );
+ }
 }

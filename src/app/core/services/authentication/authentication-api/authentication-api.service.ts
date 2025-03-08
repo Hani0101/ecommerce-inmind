@@ -13,6 +13,8 @@ import { environment } from '../../../../../environments/environments';
 export class AuthenticationApiService {
   private logInApiUrl = environment.logInApi;
   private signUpApiUrl = environment.signUpApi;
+  private refreshTokenApiUrl = '/api/auth/refresh'; //proxy path
+  private currentUserApiUrl = environment.currentUserApi;
   constructor(private http: HttpClient) { }
 
   login(request: ILoginRequest): Observable<ILoginResponse> {
@@ -22,5 +24,36 @@ export class AuthenticationApiService {
   signUp(request: ISignUpRequest): Observable<ISignUpResponse> {
     return this.http.post<ISignUpResponse>(this.signUpApiUrl, request);
   }
+
+  refreshToken(refreshToken: string, expiresInMins?: number): Observable<ILoginResponse> {
+    const body: any = {};
+
+    if (refreshToken) {
+      console.log("refresh token being added: ", refreshToken);
+      body.refreshToken = refreshToken;
+    }
+
+    if (expiresInMins) {
+      body.expiresInMins = expiresInMins;
+    }
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+
+    console.log("refresh token body: ", this.refreshTokenApiUrl, body, { headers });
+
+    return this.http.post<ILoginResponse>(this.refreshTokenApiUrl, body, {
+      headers,
+      withCredentials: true, 
+    });
+  }
+
+
+  getCurrentUser(): Observable<ILoginResponse>{
+    return this.http.get<ILoginResponse>(this.currentUserApiUrl); //no need for headers since interceptor handles it
+  }
+
+
 
 }
