@@ -4,7 +4,9 @@ import { Store } from '@ngrx/store';
 import { addItemToCart } from '../../../state/cart.actions';
 import { inject } from '@angular/core';
 import { ICartItem } from '../../models/cart-item.model';
-import { AuthenticationService } from '../../../core/services/authentication/authentication-service/authentication.service'; 
+import { AuthenticationService } from '../../../core/services/authentication/authentication-service/authentication.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-product-card',
   templateUrl: './product-card.component.html',
@@ -17,6 +19,7 @@ export class ProductCardComponent {
 
   private store$ = inject(Store);
   private authService = inject(AuthenticationService);
+  private router = inject(Router); 
 
   addToCart(product: IProduct) {
     const user = this.authService.getUserData();
@@ -46,5 +49,9 @@ export class ProductCardComponent {
       return this.product.price * (1 - this.product.discountPercentage / 100);
     }
     return this.product.price;
+  }
+
+  viewProductDetails() {
+    this.router.navigate(['/product', this.product.id]);
   }
 }

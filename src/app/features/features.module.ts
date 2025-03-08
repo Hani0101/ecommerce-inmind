@@ -17,6 +17,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSelectModule } from '@angular/material/select';
 import { SearchResultsComponent } from './pages/search-results/search-results.component';
+import { SingleProductViewComponent } from './pages/single-product-view/single-product-view.component';
+import { MatExpansionModule } from '@angular/material/expansion';
+
 @NgModule({
   declarations: [
     HeroComponent,
@@ -26,7 +29,8 @@ import { SearchResultsComponent } from './pages/search-results/search-results.co
     CartComponent,
     CategoryComponent,
     LandingPageComponent,
-    SearchResultsComponent
+    SearchResultsComponent,
+    SingleProductViewComponent
   ],
   imports: [
     CommonModule,
@@ -38,6 +42,7 @@ import { SearchResultsComponent } from './pages/search-results/search-results.co
     MatSelectModule,
     MatFormFieldModule,
     NgxSpinnerModule,
+    MatExpansionModule
   ],
   exports: [
     HeroComponent,
@@ -47,7 +52,8 @@ import { SearchResultsComponent } from './pages/search-results/search-results.co
     CartComponent,
     CategoryComponent,
     LandingPageComponent,
-    SearchResultsComponent
+    SearchResultsComponent,
+    SingleProductViewComponent
   ],
   providers: [CartService]
 })

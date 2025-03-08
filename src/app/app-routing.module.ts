@@ -7,6 +7,8 @@ import { CartComponent } from './features/pages/cart/cart.component';
 import { CategoryComponent } from './features/pages/category/category.component';
 import { LandingPageComponent } from './features/pages/landing-page/landing-page.component';
 import { SearchResultsComponent } from './features/pages/search-results/search-results.component';
+import { SingleProductViewComponent } from './features/pages/single-product-view/single-product-view.component';
+
 const routes: Routes = [
   { path: 'log-in', component: LogInComponent },
   { path: 'sign-up', component: SignUpComponent },
@@ -15,7 +17,7 @@ const routes: Routes = [
   { path: 'cart', component: CartComponent },
   { path: 'category/:name', component: CategoryComponent },
   { path: 'search', component: SearchResultsComponent },
-  { path: '**', redirectTo: '/not-found' }, 
+  { path: 'product/:id', component: SingleProductViewComponent },
 
 ];
 
