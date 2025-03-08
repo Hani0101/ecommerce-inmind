@@ -1,5 +1,5 @@
 <!-- Product Container -->
-<div class="product-container">
+<div class="product-container section">
   <!-- Image Gallery Section -->
   <div class="image-gallery">
     <div class="main-image" (mouseenter)="enableZoom()" (mouseleave)="disableZoom()" (mousemove)="handleZoom($event)">
@@ -84,6 +84,7 @@
     <p class="review-content">{{ review?.comment }}</p>
   </div>
 </div>
-
   </div>
 </div>
+<app-recommended-section [categoryName]="product!.category"></app-recommended-section>
+

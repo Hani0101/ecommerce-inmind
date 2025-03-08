@@ -20,6 +20,10 @@ export class ProductService {
     return this.http.get<{ products: IProduct[] }>(`${this.prodUrl}/category/${categoryName}?sortBy=${sortBy}&order=${order}`);
   }
 
+  getRecommendedProducts(categoryName: string): Observable<{ products: IProduct[] }> {
+    return this.http.get<{ products: IProduct[] }>(`${this.prodUrl}/category/${categoryName}?limit=10`);
+  }
+
   getGeneralProducts(): Observable<{ products: IProduct[] }> {
     return this.http.get<{products: IProduct[]}>(`${this.prodUrl}?limit=15`);
   }

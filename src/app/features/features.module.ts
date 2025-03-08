@@ -34,6 +34,7 @@ import { ProductsGridComponent } from './components/products-grid/products-grid.
 import { MyAccountComponent } from './pages/my-account/my-account.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
+import { RecommendedSectionComponent } from './components/recommended-section/recommended-section.component';
 @NgModule({
   declarations: [
     HeroComponent,
@@ -44,11 +45,12 @@ import { CheckoutComponent } from './pages/checkout/checkout.component';
     CategoryComponent,
     LandingPageComponent,
     SearchResultsComponent,
+    RecommendedSectionComponent,
     SingleProductViewComponent,
     AdminPageComponent,
     ProductsGridComponent,
     MyAccountComponent,
-    CheckoutComponent
+    CheckoutComponent,
   ],
   imports: [
     CommonModule,
@@ -82,11 +84,12 @@ import { CheckoutComponent } from './pages/checkout/checkout.component';
     CategoryComponent,
     LandingPageComponent,
     SearchResultsComponent,
+    RecommendedSectionComponent,
     SingleProductViewComponent,
     AdminPageComponent,
     ProductsGridComponent,
     MyAccountComponent,
-    CheckoutComponent
+    CheckoutComponent,
   ],
   providers: [CartService],
 })
