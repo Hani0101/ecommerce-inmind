@@ -2,6 +2,10 @@
 
 .footer-container{
     @include flex(space-between, baseline, nowrap, row);
+
+    @media (max-width: 1028px){
+        @include flex(center, center, wrap, column);        
+    }
 }
 
 .logo{
@@ -13,6 +17,11 @@
     &:hover{
         cursor: pointer;
     }
+
+    @media (max-width: 1028px){
+        margin-left: 0px;
+    }
+
 }
 
 .footer-text{
@@ -29,31 +38,19 @@ padding-bottom: 20px;
 
 
 .title{
-color: $text-color-primary;
-font-family: 'Roboto';
-font-style: normal;
-font-weight: 400;
-font-size: 24px;
-line-height: 100%;
-letter-spacing: 0.1em;
-}
-
-.about-us{
+@include text-styles($font-roboto, normal, 400, 24px, 100%, 0.1em);
+@media (max-width: 1028px){
     display: flex;
-    flex-direction: column;
     justify-content: center;
 }
-
-.customer-care{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
 }
 
-.socials{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+
+.footer-content{
+    @include flex(center, start, wrap, column);
+    @media (max-width: 1028px){
+        align-items: center;
+    }
 }
 
 .social-icon{
@@ -70,12 +67,5 @@ letter-spacing: 0.1em;
 }
 
 .rights-text{
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 300;
-    font-size: 10px;
-    line-height: 100%;
-    letter-spacing: 0.1em;
-    color: $text-color-transparent;
-    white-space: nowrap;
+    @include text-styles($font-roboto, normal, 300, 10px, 100%, 0.1em, $text-color-transparent, nowrap);
 }
