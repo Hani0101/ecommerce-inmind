@@ -11,19 +11,20 @@ import { SingleProductViewComponent } from './features/pages/single-product-view
 import { AdminPageComponent } from './features/pages/admin-page/admin-page.component';
 import { MyAccountComponent } from './features/pages/my-account/my-account.component';
 import { CheckoutComponent } from './features/pages/checkout/checkout.component';
+import { authGuard } from './core/guards/auth.guard';
 const routes: Routes = [
   { path: 'log-in', component: LogInComponent },
   { path: 'sign-up', component: SignUpComponent },
   { path: '', component: LandingPageComponent },  
   { path: 'not-found', component: NotFoundComponent },
-  { path: 'cart', component: CartComponent },
+  { path: 'cart', component: CartComponent, canActivate: [authGuard] },
   { path: 'category/:name', component: CategoryComponent },
   { path: 'search', component: SearchResultsComponent },
   { path: 'product/:id', component: SingleProductViewComponent },
   { path: 'admin', component: AdminPageComponent },
-  { path: 'my-account', component: MyAccountComponent },
-  { path: 'checkout', component: CheckoutComponent },
-  //{ path: '**', redirectTo: 'not-found' }
+  { path: 'my-account', component: MyAccountComponent, canActivate: [authGuard] },
+  { path: 'checkout', component: CheckoutComponent, canActivate: [authGuard] },
+  { path: '**', redirectTo: 'not-found' }
 
 ];
 
