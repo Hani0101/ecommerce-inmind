@@ -44,7 +44,7 @@
 
       <div class="main-content">
         <!-- Dashboard Section -->
-        <div *ngIf="showDashboard" class="dashboard-grid">
+        <div class="dashboard-grid" [hidden]="!showDashboard">
           <mat-card class="stat-card">
             <mat-card-content>
               <div class="stat-header">
@@ -144,10 +144,10 @@
               </mat-list>
             </mat-card-content>
           </mat-card>
-        </div>
+    </div>
 
         <!-- Products Section -->
-        <div *ngIf="showProducts" class="products-grid">
+        <div [hidden]="!showProducts" class="products-grid">
           <app-products-grid></app-products-grid>
         </div>
       </div>

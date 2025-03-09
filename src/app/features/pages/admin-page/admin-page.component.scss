@@ -162,3 +162,7 @@
     }
   }
  
+  .dashboard-grid[hidden],
+.products-grid[hidden] {
+  display: none !important;
+}

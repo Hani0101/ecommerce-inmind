@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { AgCharts } from "ag-charts-community";
 import { dailyVisitorsChartConfig, dailySalesChartConfig, monthlyVisitorsChartConfig, monthlySalesChartConfig } from "./chart-config";
-import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-admin-page',
@@ -12,7 +11,6 @@ import { MatSidenav } from '@angular/material/sidenav';
 
 
 export class AdminPageComponent implements OnInit {
-  @ViewChild('sidenav') sidenav!: MatSidenav;
   showDashboard = true;
   showProducts = false;
 
