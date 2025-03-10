@@ -13,10 +13,14 @@ import { dailyVisitorsChartConfig, dailySalesChartConfig, monthlyVisitorsChartCo
 export class AdminPageComponent implements OnInit {
   showDashboard = true;
   showProducts = false;
+  showUsers = false;
+  showOrders = false;
 
   toggleView(view: string) {
     this.showDashboard = view === 'dashboard';
     this.showProducts = view === 'products';
+    this.showUsers = view === 'users';
+    this.showOrders = view === 'orders';
   }
 
 
@@ -28,6 +32,8 @@ export class AdminPageComponent implements OnInit {
   notificationCount = 3;
   totalRevenue = 124500;
   revenueGrowth = 12.5;
+  topSellingProducts = 120;
+  totalCustomers = 1500;
   orderCount = 1234;
   pendingOrders = 23;
   selectedTimeRange = "monthly";
@@ -41,7 +47,7 @@ export class AdminPageComponent implements OnInit {
   topProducts = [
     { name: "Premium Headphones", image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=50", revenue: 12500, sales: 125 },
     { name: "Wireless Speaker", image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=50", revenue: 10800, sales: 98 },
-    { name: "Smart Watch", image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=50", revenue: 9500, sales: 87 }
+    { name: "Smart Watch", image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=50", revenue: 9500, sales: 87},
   ];
 
   ngOnInit(): void {

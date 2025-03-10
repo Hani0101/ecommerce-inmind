@@ -31,6 +31,8 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { AdminPageComponent } from './pages/admin-page/admin-page.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { ProductsGridComponent } from './components/products-grid/products-grid.component';
+import { OrdersGridComponent } from './components/orders-grid/orders-grid.component';
+import { UsersGridComponent } from './components/users-grid/users-grid.component';
 import { MyAccountComponent } from './pages/my-account/my-account.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
@@ -51,6 +53,8 @@ import { RecommendedSectionComponent } from './components/recommended-section/re
     ProductsGridComponent,
     MyAccountComponent,
     CheckoutComponent,
+    UsersGridComponent,
+    OrdersGridComponent
   ],
   imports: [
     CommonModule,
@@ -73,7 +77,7 @@ import { RecommendedSectionComponent } from './components/recommended-section/re
     MatDividerModule,
     NgApexchartsModule,
     AgGridModule, 
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   exports: [
     HeroComponent,
@@ -90,6 +94,8 @@ import { RecommendedSectionComponent } from './components/recommended-section/re
     ProductsGridComponent,
     MyAccountComponent,
     CheckoutComponent,
+    UsersGridComponent,
+    OrdersGridComponent
   ],
   providers: [CartService],
 })

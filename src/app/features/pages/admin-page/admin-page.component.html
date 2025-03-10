@@ -7,22 +7,24 @@
       </div>
       <mat-nav-list>
         <a mat-list-item (click)="toggleView('dashboard')" [class.active]="showDashboard">
-          <mat-icon>dashboard</mat-icon> Dashboard
+          <div class="center">
+            <mat-icon>dashboard</mat-icon> Dashboard
+          </div>
         </a>
         <a mat-list-item (click)="toggleView('products')" [class.active]="showProducts">
-          <mat-icon>inventory_2</mat-icon> Products
+          <div class="center">
+            <mat-icon>inventory_2</mat-icon> Products
+          </div>
         </a>
-        <a mat-list-item routerLink="/orders" routerLinkActive="active">
-          <mat-icon>shopping_cart</mat-icon> Orders
+        <a mat-list-item (click)="toggleView('orders')" [class.active]="showOrders">
+          <div class="center">
+            <mat-icon>shopping_cart</mat-icon> Orders
+          </div>
         </a>
-        <a mat-list-item routerLink="/users" routerLinkActive="active">
-          <mat-icon>people</mat-icon> Users
-        </a>
-        <a mat-list-item routerLink="/analytics" routerLinkActive="active">
-          <mat-icon>analytics</mat-icon> Analytics
-        </a>
-        <a mat-list-item routerLink="/settings" routerLinkActive="active">
-          <mat-icon>settings</mat-icon> Settings
+        <a mat-list-item (click)="toggleView('users')" [class.active]="showUsers">
+          <div class="center">
+            <mat-icon>people</mat-icon> Users
+          </div>
         </a>
       </mat-nav-list>
     </mat-sidenav>
@@ -34,11 +36,14 @@
         </button>
         <span class="toolbar-spacer"></span>
         <button mat-icon-button [matMenuTriggerFor]="notificationMenu">
-          <mat-icon [matBadge]="notificationCount" matBadgeColor="warn">notifications</mat-icon>
+            <mat-icon [matBadge]="notificationCount" matBadgeColor="warn">notifications</mat-icon>
         </button>
+
         <button mat-button [matMenuTriggerFor]="profileMenu" class="profile-button">
+          <div class="center gap">
           <img [src]="userAvatar" alt="User Avatar" class="avatar" />
-          {{ userName }}
+          <span>{{ userName }}</span>
+        </div>
         </button>
       </mat-toolbar>
 
@@ -68,29 +73,28 @@
               <p>{{ pendingOrders }} pending</p>
             </mat-card-content>
           </mat-card>
-
           <mat-card class="stat-card">
             <mat-card-content>
               <div class="stat-header">
-                <mat-icon color="accent">shopping_bag</mat-icon>
-                <h3>Orders</h3>
+                <mat-icon color="accent">trending_up</mat-icon>
+                <h3>Top-selling Products</h3>
               </div>
-              <h2>{{ orderCount | number }}</h2>
-              <p>{{ pendingOrders }} pending</p>
+              <h2>{{ topSellingProducts | number }}</h2>
+              <p>Best sellers this month</p>
             </mat-card-content>
           </mat-card>
-
+          
           <mat-card class="stat-card">
             <mat-card-content>
               <div class="stat-header">
-                <mat-icon color="accent">shopping_bag</mat-icon>
-                <h3>Orders</h3>
+                <mat-icon color="accent">group</mat-icon>
+                <h3>Total Customers</h3>
               </div>
-              <h2>{{ orderCount | number }}</h2>
-              <p>{{ pendingOrders }} pending</p>
+              <h2>{{ totalCustomers | number }}</h2>
+              <p>Active customers</p>
             </mat-card-content>
           </mat-card>
-
+          
           <mat-card class="daily-chart-card">
             <mat-card-header>
               <mat-card-title>Daily Visitors</mat-card-title>
@@ -133,7 +137,61 @@
             </mat-card-header>
             <mat-card-content>
               <mat-list>
-                <mat-list-item *ngFor="let product of topProducts">
+                <mat-list-item *ngFor="let product of topProducts" class="top-product">
+                  <img matListAvatar [src]="product.image" [alt]="product.name" />
+                  <div matLine>{{ product.name }}</div>
+                  <div matLine class="product-stats">
+                    <span>${{ product.revenue | number }}</span>
+                    <span>{{ product.sales }} sales</span>
+                  </div>
+                </mat-list-item>
+              </mat-list>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card class="products-card">
+            <mat-card-header>
+              <mat-card-title>Top Products</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <mat-list>
+                <mat-list-item *ngFor="let product of topProducts" class="top-product">
+                  <img matListAvatar [src]="product.image" [alt]="product.name" />
+                  <div matLine>{{ product.name }}</div>
+                  <div matLine class="product-stats">
+                    <span>${{ product.revenue | number }}</span>
+                    <span>{{ product.sales }} sales</span>
+                  </div>
+                </mat-list-item>
+              </mat-list>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card class="products-card">
+            <mat-card-header>
+              <mat-card-title>Top Products</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <mat-list>
+                <mat-list-item *ngFor="let product of topProducts" class="top-product">
+                  <img matListAvatar [src]="product.image" [alt]="product.name" />
+                  <div matLine>{{ product.name }}</div>
+                  <div matLine class="product-stats">
+                    <span>${{ product.revenue | number }}</span>
+                    <span>{{ product.sales }} sales</span>
+                  </div>
+                </mat-list-item>
+              </mat-list>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card class="products-card">
+            <mat-card-header>
+              <mat-card-title>Top Products</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <mat-list>
+                <mat-list-item *ngFor="let product of topProducts" class="top-product">
                   <img matListAvatar [src]="product.image" [alt]="product.name" />
                   <div matLine>{{ product.name }}</div>
                   <div matLine class="product-stats">
@@ -150,6 +208,14 @@
         <div [hidden]="!showProducts" class="products-grid">
           <app-products-grid></app-products-grid>
         </div>
+
+        <div [hidden]="!showUsers" class="products-grid">
+          <app-users-grid></app-users-grid>
+        </div>
+
+        <div [hidden]="!showOrders" class="products-grid">
+          <app-orders-grid></app-orders-grid>
+        </div>
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
@@ -159,10 +225,9 @@
     <div class="notification-menu">
       <mat-list>
         <mat-list-item *ngFor="let notification of notifications">
-          <mat-icon mat-list-icon [color]="notification.type">{{ notification.icon }}</mat-icon>
-          <div mat-line>{{ notification.message }}</div>
-          <div mat-line class="notification-time">{{ notification.time | date:'shortTime' }}</div>
-        </mat-list-item>
+              <div mat-line>{{ notification.message }}</div>
+              <div mat-line class="notification-time">{{ notification.time | date:'shortTime' }}</div>
+          </mat-list-item>
       </mat-list>
     </div>
   </mat-menu>

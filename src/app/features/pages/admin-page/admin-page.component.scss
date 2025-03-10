@@ -35,7 +35,7 @@
     align-items: center;
     gap: 12px;
     color: #666;
-    transition: all 0.3s ease;
+    transition: all 0.3s ease-in-out;
   }
   
   mat-nav-list a.active {
@@ -52,7 +52,11 @@
     align-items: center;
     gap: 8px;
   }
-  
+.center{
+  display: flex !important;
+    align-items: center !important;
+  }
+
   .avatar {
     width: 32px;
     height: 32px;
@@ -72,7 +76,7 @@
   }
   
   .stat-card {
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease-in-out;
   }
   
   .stat-card:hover {
@@ -126,6 +130,10 @@
   }
   
   .notification-menu {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: start;
     max-height: 400px;
     overflow-y: auto;
   }
@@ -165,4 +173,11 @@
   .dashboard-grid[hidden],
 .products-grid[hidden] {
   display: none !important;
+}
+.gap{
+  column-gap: 8px;
+}
+
+.top-product{
+  height: 90px !important;
 }
