@@ -1,3 +1,4 @@
+@import "../../../../styles/main.scss";
 .product-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -49,7 +50,6 @@
 }
 
 .thumbnails img.active {
-  border: 2px solid #1976d2;
   opacity: 1;
 }
 
@@ -61,7 +61,7 @@
   font-size: 2rem;
   font-weight: 600;
   margin-bottom: 1rem;
-  color: #333;
+  color: $text-color-primary;
 }
 
 .price-section {
@@ -74,17 +74,17 @@
 .current-price {
   font-size: 1.8rem;
   font-weight: 600;
-  color: #1976d2;
+  color: $text-color-sale;
 }
 
 .original-price {
   text-decoration: line-through;
-  color: #666;
+  color: $text-color-secondary;
 }
 
 .discount {
-  background-color: #e53935;
-  color: white;
+  background-color: $bg-color-sale;
+  color: $text-color-primary;
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
   font-size: 0.9rem;
@@ -99,7 +99,7 @@
 
 .stars {
   display: flex;
-  color: #ffd700;
+  color: $logo-color;
 }
 
 .variants {
@@ -115,19 +115,26 @@
   gap: 0.5rem;
 }
 
-.color-options button {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
+.btn-cart {
+  padding: 8px 16px;
+  border-radius: 6px;
   border: none;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: background-color 0.3s ease;
+  background: $text-color-sale;
+  color: $text-color-transparent;
+  flex: 1;
 }
 
-.color-options button.selected {
-  transform: scale(1.1);
-  border: 2px solid #1976d2;
+.btn-cart:hover {
+  background: $bg-color-sale;
 }
+
+.btn-cart:disabled {
+  background: $text-color-secondary;
+  cursor: not-allowed;
+}
+
 
 .sizes {
   margin-bottom: 1rem;
@@ -154,7 +161,7 @@
 
 .review-card {
   padding: 1rem;
-  border: 1px solid #eee;
+  border: 1px solid $bg-color-light-gray;
   border-radius: 8px;
   margin-bottom: 1rem;
 }
@@ -166,7 +173,7 @@
 }
 
 .review-stars {
-  color: #ffd700;
+  color: $logo-color;
 }
 
 @media (max-width: 480px) {

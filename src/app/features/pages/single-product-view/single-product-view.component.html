@@ -1,5 +1,5 @@
 <!-- Product Container -->
-<div class="product-container section">
+<div class="product-container">
   <!-- Image Gallery Section -->
   <div class="image-gallery">
     <div class="main-image" (mouseenter)="enableZoom()" (mouseleave)="disableZoom()" (mousemove)="handleZoom($event)">
@@ -19,8 +19,8 @@
     <h1 class="product-title">{{ product?.title }}</h1>
 
     <div class="price-section">
-      <span class="current-price" *ngIf="product">{{ getDiscountedPrice(product) }}</span>
-      <span class="original-price" *ngIf="product?.discountPercentage">{{ product?.price }}</span>
+      <span class="current-price" *ngIf="product">{{ getDiscountedPrice(product) | number: '1.2-2' }}</span>
+      <span class="original-price" *ngIf="product?.discountPercentage">{{ product?.price | number: '1.2-2' }}</span>
       <span class="discount" *ngIf="product?.discountPercentage">{{ product?.discountPercentage }}% OFF</span>
     </div>
 
@@ -34,11 +34,8 @@
     <p class="description">{{ product?.description }}</p>
 
     <div class="action-buttons">
-      <button mat-raised-button color="primary" class="add-to-cart" (click)="addToCart()">
-        <mat-icon>shopping_cart</mat-icon> Add to Cart
-      </button>
-      <button mat-raised-button color="accent" class="buy-now" (click)="buyNow()">
-        Buy Now
+      <button class="btn-cart" >
+        Add to Cart
       </button>
       <button mat-icon-button class="wishlist" (click)="toggleWishlist()">
         <mat-icon>{{ isInWishlist ? 'favorite' : 'favorite_border' }}</mat-icon>

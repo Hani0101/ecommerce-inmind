@@ -1,7 +1,7 @@
 <div class="category-products">
-  <h1>Sashay Your Way to the Best {{categoryName}} Deals!</h1>
-  <div class="product-grid">
-    <div class="product-card" *ngFor="let product of products" (click)="openProductDetails(product)" tabindex="0">
+  <h1>Meet our best ellers from {{categoryName}} Category!</h1>
+  <div class="product-grid" [ngClass]="{'not-five-cards': products.length !== 5, 'five-cards': products.length === 5}">
+    <div class="product-card" [ngClass]="{'not-five-cards': products.length !== 5, 'five-cards': products.length === 5}" *ngFor="let product of products" (click)="openProductDetails(product)" tabindex="0">
       <div class="image-container">
         <img [src]="product.thumbnail" [alt]="product.title" (error)="handleImageError($event)">
         <div class="discount-badge" *ngIf="product.discountPercentage > 0">
@@ -9,8 +9,8 @@
         </div>
       </div>
       <div class="product-info">
-        <h3 class="product-name">{{ product.title }}</h3>
-        <p class="product-description">{{ product.description }}</p>
+        <h3 class="product-name">{{ product.title | truncate: 2}}</h3>
+        <p class="product-description">{{ product.description | truncate: 3 }}</p>
         <div class="price-container">
           <span class="current-price">${{ product.price }}</span>
           <span class="original-price" *ngIf="product.discountPercentage > 0">
