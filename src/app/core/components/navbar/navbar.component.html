@@ -29,6 +29,7 @@
 
       <div class="icon">
         <mat-icon fontIcon="shopping_cart" class="mat-icon-custom-outline mat-icon-custom" (click)="navigateToCart()"></mat-icon>
+        <span *ngIf="cartItemCount > 0" class="cart-count-badge">{{ cartItemCount }}</span>
       </div>
     </div>
     
@@ -129,6 +130,7 @@
 
     <div class="icon">
       <mat-icon fontIcon="shopping_cart" class="mat-icon-custom-outline mat-icon-custom" (click)="navigateToCart()"></mat-icon>
+      <span *ngIf="cartItemCount > 0" class="cart-count-badge">{{ cartItemCount }}</span>
     </div>
     
   </div>

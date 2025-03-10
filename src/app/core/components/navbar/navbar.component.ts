@@ -5,7 +5,7 @@ import { ICategories } from '../../models/category';
 import { Observable } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthenticationService } from '../../services/authentication/authentication-service/authentication.service';
-
+import { CartService } from '../../services/cart/cart.service';
 @Component({
   selector: 'app-navbar',
   standalone: false,
@@ -21,9 +21,12 @@ export class NavbarComponent implements OnInit {
   categories: ICategories[] = [];
   searchQuery: string = '';
   userProfilePicture: string = '';
-  constructor(private authService: AuthenticationService, private router: Router, private categoryService: CategoryService, private spinner: NgxSpinnerService  ) {}
+  cartItemCount: number = 0;
+
+  constructor(private cartService: CartService, private authService: AuthenticationService, private router: Router, private categoryService: CategoryService, private spinner: NgxSpinnerService  ) {}
 
   ngOnInit(){
+    this.loadCartItemCount();
     const userId = this.authService.decodeJwtToken(this.authService.getAccessToken());
     this.isLoggedIn = !!userId;
     if (this.isLoggedIn) {
@@ -61,6 +64,28 @@ export class NavbarComponent implements OnInit {
       this.router.navigate(['/search'], { queryParams: { q: this.searchQuery.trim() } });
     }
   }
+  loadCartItemCount(): void {
+    const userId = this.authService.decodeJwtToken(this.authService.getAccessToken());
+    console.log('Decoded User ID:', userId); // Debugging step
+  
+    if (!userId) {
+      console.error('User ID is undefined! Check token decoding.');
+      return;
+    }
+  
+    this.cartService.getCartItemCount(Number(userId)).subscribe({
+      next: (response) => {
+        console.log('Raw API Response:', response); // Log full response
+        this.cartItemCount = response.itemCount; // Corrected key
+        console.log('Cart count:', this.cartItemCount);
+      },
+      error: (error) => {
+        console.error('Error fetching cart count:', error);
+      }
+    });
+  }
+  
+
 
   fetchCategories(): Observable<ICategories[]> {
       return this.categoryService.getCategories();
