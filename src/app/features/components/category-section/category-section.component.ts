@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProductService } from '../../services/product/product.service';
 import { IProduct } from '../../../shared/models/product';
 import { Observable } from 'rxjs';
-
+import { Router } from '@angular/router';
 declare var $: any;
 
 @Component({
@@ -15,7 +15,7 @@ export class CategorySectionComponent implements OnInit, OnDestroy {
   products: IProduct[] = [];
   private carouselInitialized = false;
 
-  constructor(private ProductService: ProductService) {}
+  constructor(private ProductService: ProductService, private router: Router) {}
 
   ngOnInit() {
     this.fetchProducts().subscribe({
@@ -77,4 +77,29 @@ export class CategorySectionComponent implements OnInit, OnDestroy {
   fetchProducts(): Observable<{ products: IProduct[] }> {
     return this.ProductService.getGeneralProducts();
   }
+
+
+  formatCategoryUrl(category: string): string {
+    return category.toLowerCase().replace(/[' ]+/g, '-'); 
+  }
+
+  readonly categoryImages: { [key: string]: string } = {
+    'Womens Bags': './assets/category/purse.png',
+    'Beauty': './assets/category/beauty.png',
+    'Tops': './assets/category/tops.png',
+    'Womens Shoes': './assets/category/womenShoes.png',
+    'Skin Care': './assets/category/cosmetics.png',
+    'Mens Shirts': './assets/category/menShirt.png'
+  };
+  
+  categoryList = Object.keys(this.categoryImages).map(category => ({
+    name: category,
+    image: this.categoryImages[category]
+  }));
+  
+
+  NaviageToSkinCare() {
+    this.router.navigate(['/category/skin-care']);
+  }
+
 }

@@ -6,7 +6,7 @@
             <div class="skin-care-content">
                 <h2>Skin Care</h2>
                 <h3>For dewy<br>glowy skin</h3>
-                <app-button text="Shop Now"></app-button>
+                <app-button text="Shop Now" (click)="NaviageToSkinCare()"></app-button>
             </div>
 
             <img src="./assets/category/skin-care.png" alt="Skin Care" class="skin-care-img">
@@ -17,11 +17,15 @@
     </div>
 
     <div class="category-grid">
-        <div class="category-wrapper slick-carousel">
-          <div class="category-card" *ngFor="let category of ['Purses', 'Jewelry', 'Women\'s Clothes', 'Men\'s Clothes', 'Shoes', 'Cosmetics']">
-            <img src="./assets/category/purse.png" alt="{{category}}" class="purses-image">
-            <h2>{{ category }}</h2>
-          </div>
-        </div>
+      <div class="category-wrapper slick-carousel">
+        <a 
+          class="category-card" 
+          *ngFor="let category of categoryList" 
+          [routerLink]="['/category', formatCategoryUrl(category.name)]"
+        >
+        <img [src]="category.image" alt="{{ category.name }}" class="category-image">
+        <h2>{{ category.name }}</h2>
+        </a>
       </div>
+    </div>    
 </div>
