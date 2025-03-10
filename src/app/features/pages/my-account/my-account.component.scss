@@ -1,3 +1,5 @@
+@import '../../../../styles/main.scss';
+
 .account-container {
     display: flex;
     min-height: 100vh;
@@ -23,7 +25,7 @@
     border-radius: 50%;
     object-fit: cover;
     margin-bottom: 1rem;
-    border: 3px solid #007bff;
+    border: 3px solid $logo-color;
   }
   
   .nav-items li {
@@ -35,16 +37,17 @@
     display: flex;
     align-items: center;
     gap: 1rem;
+    color: $text-color-primary;
   }
   
   .nav-items li:hover {
     background: #f0f7ff;
-    color: #007bff;
+    color: $text-color-secondary;
   }
   
   .nav-items li.active {
-    background: #007bff;
-    color: white;
+    background: $bg-color-category;
+    color: $text-color-transparent;
   }
   
   .main-content {
@@ -54,7 +57,7 @@
   }
   
   .section-content {
-    background: white;
+    background: $bg-color-primary;
     border-radius: 12px;
     padding: 2rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -91,7 +94,7 @@
   }
   
   .form-control:focus {
-    border-color: #007bff;
+    border-color: $bg-color-category;
     outline: none;
   }
   
@@ -102,7 +105,7 @@
   }
   
   .btn-primary {
-    background: #007bff;
+    background: $bg-color-category;
     color: white;
     border: none;
     padding: 0.75rem 1.5rem;
@@ -112,7 +115,7 @@
   }
   
   .btn-primary:hover {
-    background: #0056b3;
+    background: $logo-color;
   }
   
   .orders-grid {

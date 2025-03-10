@@ -51,11 +51,14 @@
       <!-- Orders Section -->
       <section *ngIf="activeSection === 'orders'" class="section-content orders">
         <div class="filters">
+          <form [formGroup]="orderSearchForm" class="order-search-form">
           <input type="text" formControlName="searchTerm" placeholder="Search orders..." class="search-input">
           <select formControlName="timeFilter" class="filter-select">
             <option value="3months">Last 3 Months</option>
             <option value="all">All Time</option>
           </select>
+          </form>
+
         </div>
         <div class="orders-grid">
           <div *ngFor="let order of filteredOrders" class="order-card">

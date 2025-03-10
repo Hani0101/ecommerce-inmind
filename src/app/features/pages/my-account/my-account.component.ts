@@ -13,7 +13,7 @@ export class MyAccountComponent implements OnInit {
   isMobileView = false;
   personalInfoForm!: FormGroup;
   orderSearchForm!: FormGroup;
-  defaultProfileImage = "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&h=100";
+  defaultProfileImage = 'https://fastly.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U';
 
   userData = {
     name: "John Doe",
@@ -48,11 +48,11 @@ export class MyAccountComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router
   ) {
-    this.initializeForm();
   }
 
   ngOnInit() {
     this.checkScreenSize();
+    this.initializeForm();
     window.addEventListener("resize", () => this.checkScreenSize());
   }
 
@@ -81,7 +81,6 @@ export class MyAccountComponent implements OnInit {
     let filtered = this.orders;
     const timeFilter = this.orderSearchForm.get("timeFilter")?.value;
     const searchTerm = this.orderSearchForm.get("searchTerm")?.value;
-
     if (timeFilter === "3months") {
       const threeMonthsAgo = new Date();
       threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
