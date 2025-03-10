@@ -8,7 +8,11 @@ import { Router } from '@angular/router';
 })
 export class HeroComponent {
   constructor(private router: Router) {}
-  NavigateToCategory(){
-    this.router.navigate(['/category']);
+  NavigateToSunglasses(){
+    this.router.navigate(['/category/sunglasses']);
   }
+  NavigateToJewelry(){
+    this.router.navigate(['/category/womens-watches']);
+  }
+
 }
