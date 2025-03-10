@@ -4,8 +4,9 @@
   <div class="nav-logo-icons-wrapper">
     <h1 class="nav-logo" (click)="navigateToHome()">Achilles</h1>
     <div class="nav-icons-wrapper">
-      <mat-icon fontIcon="favorite_outlined" class="mat-icon-custom"></mat-icon>
-      
+      <div class="icon">
+        <mat-icon fontIcon="favorite_outlined" class="mat-icon-custom"></mat-icon>
+      </div>
       <!-- Profile Icon or Picture -->
       <div class="icon pfp-border" (click)="toggleProfileDropdown()" *ngIf="isLoggedIn">
         <button mat-icon-button [matMenuTriggerFor]="profileMenu">
@@ -16,13 +17,19 @@
         />
       </button>
       </div>
-        <mat-icon
-          *ngIf="!isLoggedIn || !userProfilePicture"
-          fontIcon="person_outlined"
-          class="mat-icon-custom"
-        ></mat-icon>
 
-    <mat-icon fontIcon="shopping_cart" class="mat-icon-custom-outline mat-icon-custom" (click)="navigateToCart()"></mat-icon>
+      <div class="icon" *ngIf="!isLoggedIn || !userProfilePicture">
+          <mat-icon
+            *ngIf="!isLoggedIn || !userProfilePicture"
+            fontIcon="person_outlined"
+            class="mat-icon-custom"
+            (click)="navigateToLogin()"
+            ></mat-icon>
+      </div>
+
+      <div class="icon">
+        <mat-icon fontIcon="shopping_cart" class="mat-icon-custom-outline mat-icon-custom" (click)="navigateToCart()"></mat-icon>
+      </div>
     </div>
     
 </div>
