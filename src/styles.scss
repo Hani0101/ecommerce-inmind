@@ -37,3 +37,12 @@ body { margin: 0; font-family: $font-roboto-sans; background-color: $bg-color-pr
   flex-direction: column;
   align-content: center;
 }
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: normal;
+    text-align: start;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+  }
+  
