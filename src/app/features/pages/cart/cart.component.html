@@ -3,7 +3,10 @@
     <div class="cart-items">
       <div class="cart-item" *ngFor="let item of cartItems; trackBy: trackByProductId">
         <div class="item-image">
-          <img [src]="getProductImage(item.product)" [alt]="item.product.title" loading="lazy">
+          <a [routerLink]="['/product', item.product.id]">
+            <img [src]="getProductImage(item.product)" [alt]="item.product.title" loading="lazy">
+          </a>
+        
         </div>
         <div class="item-details">
           <h3>{{ item.product.title || 'Product unavailable' }}</h3>
@@ -48,4 +51,12 @@
     </div>
   </div>
   <app-trending-section class="section"></app-trending-section>
+</div>
+
+
+<div *ngIf="!(cartItems$ | async) as cartItems" class="cart-container">
+          <h2>Your cart is empty!</h2>
+      <p>Looks like you haven’t added anything yet. 🛒</p>
+
+      <app-trending-section class="section"></app-trending-section>
 </div>

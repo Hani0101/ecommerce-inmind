@@ -37,6 +37,8 @@ import { MyAccountComponent } from './pages/my-account/my-account.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { RecommendedSectionComponent } from './components/recommended-section/recommended-section.component';
+import { RouterModule } from '@angular/router';
+
 @NgModule({
   declarations: [
     HeroComponent,
@@ -78,6 +80,7 @@ import { RecommendedSectionComponent } from './components/recommended-section/re
     NgApexchartsModule,
     AgGridModule, 
     ReactiveFormsModule,
+    RouterModule
   ],
   exports: [
     HeroComponent,
