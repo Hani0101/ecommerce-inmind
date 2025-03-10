@@ -20,7 +20,6 @@ export class ProductCardComponent {
   @Input() set product(value: IProduct) {
     this._product = value;
     this.productImage = this.calculateProductImage();
-    this.discountedPrice = this.calculateDiscountedPrice();
   }
   get product(): IProduct {
     return this._product;
@@ -28,7 +27,6 @@ export class ProductCardComponent {
   private _product: IProduct = {} as IProduct;
 
   productImage = '';
-  discountedPrice = 0;
 
   private readonly store$ = inject(Store);
   private readonly authService = inject(AuthenticationService);
@@ -38,21 +36,16 @@ export class ProductCardComponent {
     return this.product.thumbnail || (this.product.images?.length ? this.product.images[0] : '');
   }
 
-  private calculateDiscountedPrice(): number {
-    return this.product.discountPercentage
-      ? this.product.price * (1 - this.product.discountPercentage / 100)
-      : this.product.price;
-  }
 
   addToCart(product: IProduct) {
     const userId = this.authService.decodeJwtToken(this.authService.getAccessToken());
 
     const cartItem: ICartItem = {
-      id: 0, // Default values
+      id: 0, //Default values
       userId: Number(userId),
-      cartId: 0, // Default values
+      cartId: 0, //Default values
       productId: product.id,
-      quantity: 1 // Default values
+      quantity: 1 //Default values
     };
 
     this.store$.dispatch(addItemToCart({ cartItem }));

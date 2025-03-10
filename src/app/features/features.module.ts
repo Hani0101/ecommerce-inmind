@@ -38,6 +38,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { RecommendedSectionComponent } from './components/recommended-section/recommended-section.component';
 import { RouterModule } from '@angular/router';
+import { HeroCategoryComponent } from './components/hero-category/hero-category.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { RouterModule } from '@angular/router';
     MyAccountComponent,
     CheckoutComponent,
     UsersGridComponent,
-    OrdersGridComponent
+    OrdersGridComponent,
+    HeroCategoryComponent
   ],
   imports: [
     CommonModule,
@@ -98,7 +100,8 @@ import { RouterModule } from '@angular/router';
     MyAccountComponent,
     CheckoutComponent,
     UsersGridComponent,
-    OrdersGridComponent
+    OrdersGridComponent,
+    HeroCategoryComponent
   ],
   providers: [CartService],
 })

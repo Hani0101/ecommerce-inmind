@@ -12,17 +12,18 @@ import { IProduct } from '../../../shared/models/product';
 export class CategoryComponent implements OnInit {
   categoryName: string = '';
   products: IProduct[] = [];
-  
- //default sorting options
- selectedSortBy: string = 'title';
- selectedOrder: string = 'asc';
 
- sortFields = [
-   { label: 'Title', value: 'title' },
-   { label: 'Price', value: 'price' },
-   { label: 'Rating', value: 'rating' },
-   { label: 'Stock', value: 'stock' }
- ];
+  selectedSortBy: string = 'price-asc'; 
+  selectedOrder: string = 'asc';         
+
+  sortFields = [
+    { label: 'Lowest Price', value: 'price-asc' },
+    { label: 'Highest Price', value: 'price-desc' },
+    { label: 'Highest Reviews', value: 'rating-desc' },
+    { label: 'Lowest Stock', value: 'stock-asc' },
+    { label: 'Highest Stock', value: 'stock-desc' }
+  ];
+
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService 
@@ -32,6 +33,7 @@ export class CategoryComponent implements OnInit {
     this.categoryName = this.route.snapshot.params['name'];
     this.fetchProducts();
   }
+
   fetchProducts(): void {
     this.productService.getProductsByCategory(this.categoryName, this.selectedSortBy, this.selectedOrder)
       .subscribe({
@@ -44,9 +46,11 @@ export class CategoryComponent implements OnInit {
       });
   }
 
-  applySorting() {
+  applySorting(): void {
+    const [sortBy, order] = this.selectedSortBy.split('-');
+
+    this.selectedSortBy = sortBy;
+    this.selectedOrder = order || 'asc';  
     this.fetchProducts();
   }
-
-
 }

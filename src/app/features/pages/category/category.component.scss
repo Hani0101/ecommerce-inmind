@@ -23,6 +23,8 @@
 .category-header {
     @include flex(flex-end, center, nowrap);
     margin-bottom: 10px;
+    margin-top: 60px;
+    column-gap: 30px;
   }
 
 .category-products{
@@ -41,6 +43,7 @@
       align-items: center;
       gap: 120px;
       font-weight: 500;
+      height: 50px;
     }
   }
 app-product-card{

@@ -31,4 +31,8 @@ export class ProductService {
   getProductsBySearch(query: string): Observable<{ products: IProduct[] }> {
     return this.http.get<{ products: IProduct[] }>(`${this.prodUrl}/search?q=${query}`);
   }
+
+  getProductsByCategoryHero(categoryName: string,): Observable<{ products: IProduct[] }> {
+    return this.http.get<{ products: IProduct[] }>(`${this.prodUrl}/category/${categoryName}?limit=4`);
+  }
 }

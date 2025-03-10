@@ -1,0 +1,49 @@
+<div class="category-products">
+  <h1>Sashay Your Way to the Best {{categoryName}} Deals!</h1>
+  <div class="product-grid">
+    <div class="product-card" *ngFor="let product of products" (click)="openProductDetails(product)" tabindex="0">
+      <div class="image-container">
+        <img [src]="product.thumbnail" [alt]="product.title" (error)="handleImageError($event)">
+        <div class="discount-badge" *ngIf="product.discountPercentage > 0">
+          -{{ product.discountPercentage }}%
+        </div>
+      </div>
+      <div class="product-info">
+        <h3 class="product-name">{{ product.title }}</h3>
+        <p class="product-description">{{ product.description }}</p>
+        <div class="price-container">
+          <span class="current-price">${{ product.price }}</span>
+          <span class="original-price" *ngIf="product.discountPercentage > 0">
+            ${{ (product.price / (1 - product.discountPercentage / 100) ) | number: '1.2-2' }}
+          </span>
+        </div>
+        <div class="stock-status" [class.in-stock]="product.stock > 0">
+          {{ product.stock > 0 ? "In Stock" : "Out of Stock" }}
+        </div>
+        <div class="rating">
+
+          <svg width="16" height="16" viewBox="0 0 13 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_170_309)">
+              <path d="M6.1698 10.8214L9.27919 12.977L8.45404 8.91436L11.2012 6.18091L7.58362 5.8284L6.1698 1.99695L4.75598 5.8284L1.13843 6.18091L3.88556 8.91436L3.06041 12.977L6.1698 10.8214Z" fill="#FF4D00"/>
+            </g>
+            <defs>
+              <clipPath id="clip0_170_309">
+                <rect width="12.0753" height="13.8695" fill="white" transform="translate(0.13208 0.841187)"/>
+              </clipPath>
+            </defs>
+          </svg>
+        {{ product.rating.toFixed(1) }} / 5
+
+        </div>
+        <div class="action-buttons">
+          <button class="btn-cart" (click)="addToCart(product, $event)" [disabled]="product.stock <= 0">
+            Add to Cart
+          </button>
+          <button class="btn-wishlist" (click)="addToWishlist(product, $event)">
+            <mat-icon>favorite_border</mat-icon>
+          </button>          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
