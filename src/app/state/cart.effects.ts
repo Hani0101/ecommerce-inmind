@@ -4,7 +4,7 @@ import { CartService } from '../features/services/cart/cart.service';
 import * as CartActions from '../state/cart.actions';
 import { inject } from '@angular/core';
 import { catchError, map, mergeMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { of, tap } from 'rxjs';
 
 @Injectable()
 export class CartEffects {
@@ -42,18 +42,22 @@ export class CartEffects {
     )
   );
 
-  //Get Total Price
   getTotalprice$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CartActions.getTotalprice),
       mergeMap(action =>
         this.cartService.getTotalPrice(action.userId).pipe(
-          map(totalPrice => CartActions.getTotalpriceSuccess({ totalPrice })),
-          catchError(error => of(CartActions.getTotalpriceFailure({ error: error.message })))
+          map(response => {
+            return CartActions.getTotalpriceSuccess({ totalPrice: response.totalPrice });
+          }),
+          catchError(error => {
+            return of(CartActions.getTotalpriceFailure({ error: error.message }));
+          })
         )
       )
     )
   );
+  
 
   incrementItemQuantity$ = createEffect(() =>
     this.actions$.pipe(

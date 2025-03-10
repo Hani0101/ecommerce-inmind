@@ -19,7 +19,7 @@
         </div>
         <div class="item-price">
           <p class="price">
-            ${{ getDiscountedPrice(item.product.price, item.product.discountPercentage) * item.quantity | number:'1.2-2' }}
+            ${{ item.product.price | number:'1.2-2' }}
           </p>
           <button class="remove-btn" (click)="removeItem(item.product.id)">
             <mat-icon>delete</mat-icon> Remove
@@ -35,10 +35,6 @@
         <span>${{ subtotal | number:'1.2-2' }}</span>
       </div>
       <div class="summary-row">
-        <span>Tax ({{ taxRate }}%)</span>
-        <span>${{ tax | number:'1.2-2' }}</span>
-      </div>
-      <div class="summary-row">
         <span>Shipping</span>
         <span>${{ shipping | number:'1.2-2' }}</span>
       </div>
@@ -51,4 +47,5 @@
       </button>
     </div>
   </div>
+  <app-trending-section class="section"></app-trending-section>
 </div>

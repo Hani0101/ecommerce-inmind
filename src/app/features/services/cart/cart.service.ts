@@ -24,8 +24,8 @@ export class CartService {
     return this.http.post<ICart>(`${this.CartUrl}/cart/${cartId}/items`, body);
   }
 
-  getTotalPrice(userId: number): Observable<number> {
-   return this.http.get<number>(`${this.CartUrl}/cart/${userId}/total-price`); 
+  getTotalPrice(userId: number): Observable< {totalPrice: number}> {
+   return this.http.get<{ totalPrice: number }>(`${this.CartUrl}/cart/${userId}/total-price`); 
   }
 
   incrementItem(userId: number, productId: number): Observable<ICart> {

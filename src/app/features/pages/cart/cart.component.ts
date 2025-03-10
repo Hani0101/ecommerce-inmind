@@ -7,7 +7,7 @@ import { AuthenticationService } from '../../../core/services/authentication/aut
 import { IProduct } from '../../../shared/models/product'; 
 import { loadCart, incrementItemQuantity, decrementItemQuantity, removeItemFromCart } from '../../../state/cart.actions';
 import { selectCartItems, selectTotalPrice } from '../../../state/cart.selector';
-
+import { getTotalprice } from '../../../state/cart.actions';
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
@@ -18,10 +18,8 @@ export class CartComponent implements OnInit {
   cartItems$!: Observable<{ product: IProduct; quantity: number }[]>; 
   totalPrice$!: Observable<number>;
  
-  taxRate: number = 10;
   shipping: number = 5.99;
   subtotal: number = 0;
-  tax: number = 0;
   total: number = 0;
 
   constructor(
@@ -35,14 +33,14 @@ export class CartComponent implements OnInit {
   }
 
   private loadCartData(): void {
+    this.getPrice();
     const user = this.authService.getUserData();
+    
     if (!user) {
-      console.error("User not found! Please log in.");
       return;
     }
     const userId = Number(user.id);
     this.store.dispatch(loadCart({ userId }));
-    this.totalPrice$ = this.store.select(selectTotalPrice);
     this.cartItems$ = this.store.select(selectCartItems).pipe(
       mergeMap(cartItems =>
         forkJoin(cartItems.map(cartItem =>
@@ -52,22 +50,32 @@ export class CartComponent implements OnInit {
         ))
       )
     );
-    this.totalPrice$.subscribe(totalPrice => {
-      this.total = totalPrice + this.tax + this.shipping;
-    });
   }
+
+  getPrice(){
+    this.totalPrice$ = this.store.select(selectTotalPrice);
+    const user = this.authService.getUserData();
+    const userId = Number(user!.id);
+    this.store.dispatch(getTotalprice({  userId: userId }));
+    this.totalPrice$.subscribe(totalPrice => {
+      this.subtotal = totalPrice;
+      this.total = totalPrice + this.shipping;
+    });    
+  }
+
 
   incrementQuantity(productId: number): void {
     const user = this.authService.getUserData();
     if (!user) return;
     this.store.dispatch(incrementItemQuantity({ userId: Number(user.id), productId }));
+    this.getPrice();
   }
 
   decrementQuantity(productId: number): void {
     const user = this.authService.getUserData();
     if (!user) return;
-
     this.store.dispatch(decrementItemQuantity({ userId: Number(user.id), productId }));
+    this.getPrice();
   }
 
   removeItem(productId: number): void {
@@ -75,23 +83,13 @@ export class CartComponent implements OnInit {
     if (!user) return;
     const userId = Number(user.id);
     this.store.dispatch(removeItemFromCart({ userId, productId }));
-  }
-
-  calculateTotals(cartItems: { product: IProduct; quantity: number }[]): void {
-    this.subtotal = cartItems.reduce((sum, item) => sum + (item.product?.price || 0) * item.quantity, 0);
-    this.tax = this.subtotal * (this.taxRate / 100);
-    this.total = this.subtotal + this.tax + this.shipping;
+    this.getPrice();
   }
 
   getProductImage(product: any): string {
     return product.thumbnail || (product.images && product.images.length > 0 ? product.images[0] : '');
   }
   
-  getDiscountedPrice(price: number, discount: number | null): number {
-    if (!price) return 0;
-    return discount ? price * (1 - discount / 100) : price;
-  }
-
   trackByProductId(index: number, item: { product: IProduct; quantity: number }): number {
     return item.product.id;
   }
