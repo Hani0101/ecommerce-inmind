@@ -24,14 +24,11 @@ export class NavbarComponent implements OnInit {
   constructor(private authService: AuthenticationService, private router: Router, private categoryService: CategoryService, private spinner: NgxSpinnerService  ) {}
 
   ngOnInit(){
-
-    this.authService.isCurrentUserLoggedIn().subscribe((isLoggedIn) => {
-      this.isLoggedIn = isLoggedIn; 
-      if (isLoggedIn) {
-        this.userProfilePicture = 'https://fastly.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U'; 
-      }
-    });
-
+    const userId = this.authService.decodeJwtToken(this.authService.getAccessToken());
+    this.isLoggedIn = !!userId;
+    if (this.isLoggedIn) {
+      this.userProfilePicture = 'https://fastly.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U'; 
+    }
     this.fetchCategories().subscribe({
       next: (data: ICategories[]) => {
         this.categories = data;
@@ -84,6 +81,9 @@ export class NavbarComponent implements OnInit {
   navigateToCategory(categoryName: ICategories): void {
     this.isCategoriesDropdownOpen = false;
     this.router.navigate([`category/${categoryName}`]);
+    setTimeout(() => {
+      window.location.reload(); }
+    ,500);
   }
 
   navigateToHome(){

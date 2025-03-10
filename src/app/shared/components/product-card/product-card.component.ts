@@ -45,16 +45,11 @@ export class ProductCardComponent {
   }
 
   addToCart(product: IProduct) {
-    const user = this.authService.getUserData();
-
-    if (!user) {
-      console.error("User not found! Please log in.");
-      return;
-    }
+    const userId = this.authService.decodeJwtToken(this.authService.getAccessToken());
 
     const cartItem: ICartItem = {
       id: 0, // Default values
-      userId: Number(user.id),
+      userId: Number(userId),
       cartId: 0, // Default values
       productId: product.id,
       quantity: 1 // Default values

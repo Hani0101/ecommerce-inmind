@@ -34,13 +34,9 @@ export class CartComponent implements OnInit {
 
   private loadCartData(): void {
     this.getPrice();
-    const user = this.authService.getUserData();
-    
-    if (!user) {
-      return;
-    }
-    const userId = Number(user.id);
-    this.store.dispatch(loadCart({ userId }));
+    const userId = this.authService.decodeJwtToken(this.authService.getAccessToken());
+    console.log("USER ID FROM CART", userId);
+    this.store.dispatch(loadCart({ userId: Number(userId) }));
     this.cartItems$ = this.store.select(selectCartItems).pipe(
       mergeMap(cartItems =>
         forkJoin(cartItems.map(cartItem =>
@@ -53,10 +49,9 @@ export class CartComponent implements OnInit {
   }
 
   getPrice(){
+    const userId = this.authService.decodeJwtToken(this.authService.getAccessToken());
     this.totalPrice$ = this.store.select(selectTotalPrice);
-    const user = this.authService.getUserData();
-    const userId = Number(user!.id);
-    this.store.dispatch(getTotalprice({  userId: userId }));
+    this.store.dispatch(getTotalprice({  userId:  Number(userId) }));
     this.totalPrice$.subscribe(totalPrice => {
       this.subtotal = totalPrice;
       this.total = totalPrice + this.shipping;
@@ -65,24 +60,22 @@ export class CartComponent implements OnInit {
 
 
   incrementQuantity(productId: number): void {
-    const user = this.authService.getUserData();
-    if (!user) return;
-    this.store.dispatch(incrementItemQuantity({ userId: Number(user.id), productId }));
+    const userId = this.authService.decodeJwtToken(this.authService.getAccessToken());
+    this.store.dispatch(incrementItemQuantity({ userId: Number(userId), productId }));
     this.getPrice();
   }
 
   decrementQuantity(productId: number): void {
-    const user = this.authService.getUserData();
-    if (!user) return;
-    this.store.dispatch(decrementItemQuantity({ userId: Number(user.id), productId }));
+    const userId = this.authService.decodeJwtToken(this.authService.getAccessToken());
+    this.store.dispatch(decrementItemQuantity({ userId: Number(userId), productId }));
     this.getPrice();
   }
 
   removeItem(productId: number): void {
-    const user = this.authService.getUserData();
-    if (!user) return;
-    const userId = Number(user.id);
-    this.store.dispatch(removeItemFromCart({ userId, productId }));
+    const userId = this.authService.decodeJwtToken(this.authService.getAccessToken());
+    if (userId !== null) {
+      this.store.dispatch(removeItemFromCart({ userId: Number(userId), productId }));
+    }
     this.getPrice();
   }
 

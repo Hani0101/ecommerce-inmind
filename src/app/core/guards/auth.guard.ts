@@ -1,23 +1,25 @@
 import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
-import { AuthenticationService } from '../services/authentication/authentication-service/authentication.service'; 
-import { map, catchError } from 'rxjs/operators';
+import { AuthenticationService } from '../services/authentication/authentication-service/authentication.service';
+import { catchError, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 export const authGuard: CanActivateFn = (route, state) => {
-  const authService = inject(AuthenticationService); 
+  const authService = inject(AuthenticationService);
   const router = inject(Router);
 
-  return authService.isCurrentUserLoggedIn().pipe(
-    map((isLoggedIn) => {
-      if (isLoggedIn) {
-        return true; 
+  return authService.refreshToken().pipe(
+    switchMap((response) => {
+      const userId = authService.decodeJwtToken(authService.getAccessToken()); 
+      if (userId) {
+        return of(true); 
       } else {
-        return router.createUrlTree(['/log-in']); 
+        return of(router.createUrlTree(['/log-in'])); 
       }
     }),
     catchError(() => {
-      return of(router.createUrlTree(['/log-in'])); 
-    })
+      console.log("GUARD IN ERROR TRIGGERED")
+      return of(router.createUrlTree(['/log-in']));
+    }),
   );
 };

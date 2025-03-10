@@ -7,6 +7,7 @@ import { ISignUpResponse } from '../../../models/signup-response';
 import { AuthenticationApiService } from '../authentication-api/authentication-api.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
+import {jwtDecode} from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,7 @@ export class AuthenticationService {
     const requestbody: ILoginRequest = {
       username,
       password,
-      expiresInMins: 1
+      expiresInMins: 60
     };
 
     const response: Observable<ILoginResponse> = this.authApiService.login(requestbody);
@@ -95,7 +96,6 @@ export class AuthenticationService {
 
   logout(): void {
     this.cookieService.delete('authToken', '/');
-    this.cookieService.delete('refreshToken', '/');
     this.cookieService.delete('user', '/');
     sessionStorage.clear();
     console.log('User data cleared. Logged out successfully.');
@@ -148,4 +148,14 @@ export class AuthenticationService {
     })
   );
  }
+
+ decodeJwtToken(token: string): string | null {
+  try {
+    const decodedToken: any = jwtDecode(token); 
+    return decodedToken.id || null; 
+  } catch (error) {
+    console.error("Error decoding JWT token:", error);
+    return null;
+  }
+}
 }

@@ -28,6 +28,7 @@
     "ag-grid-angular": "^33.1.1",
     "bootstrap-icons": "^1.11.3",
     "jquery": "^3.7.1",
+    "jwt-decode": "^4.0.0",
     "ng-apexcharts": "^1.15.0",
     "ngx-cookie-service": "^19.1.2",
     "ngx-slick-carousel": "^19.0.0",
