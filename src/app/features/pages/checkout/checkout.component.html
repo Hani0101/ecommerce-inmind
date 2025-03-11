@@ -28,16 +28,12 @@
           <span>${{subtotal}}</span>
         </div>
         <div class="total-row">
-          <span>Tax:</span>
-          <span>${{tax}}</span>
-        </div>
-        <div class="total-row">
           <span>Shipping:</span>
           <span>${{shipping}}</span>
         </div>
         <div class="total-row grand-total">
           <span>Total:</span>
-          <span>${{total}}</span>
+          <span>${{total | number:'1.2-2'}}</span>
         </div>
       </div>
       <button class="next-btn" (click)="nextStep()">Continue to Shipping</button>
@@ -172,21 +168,17 @@
               <span>Shipping:</span>
               <span>${{shipping}}</span>
             </div>
-            <div class="total-row">
-              <span>Tax:</span>
-              <span>${{tax}}</span>
-            </div>
             <div class="total-row grand-total">
               <span>Order Total:</span>
-              <span>${{total}}</span>
+              <span>${{total | number:'1.2-2'}}</span>
             </div>
           </div>
         </div>
       </div>
       <div class="button-group">
         <button class="back-btn" (click)="previousStep()">Back</button>
-        <button class="place-order-btn" (click)="placeOrder()" [disabled]="isProcessing">
-          <span *ngIf="!isProcessing">Place Order</span>
+        <button class="place-order-btn"  (click)="NavigateHome()" [disabled]="isProcessing">
+          <span *ngIf="!isProcessing" (click)="NavigateHome()">Place Order</span>
           <span class="spinner" *ngIf="isProcessing"></span>
         </button>
       </div>
