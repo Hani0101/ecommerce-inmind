@@ -96,6 +96,7 @@ export class AuthenticationService {
 
   logout(): void {
     this.cookieService.delete('authToken', '/');
+    this.cookieService.delete('accessToken', '/');
     this.cookieService.delete('user', '/');
     sessionStorage.clear();
     console.log('User data cleared. Logged out successfully.');
