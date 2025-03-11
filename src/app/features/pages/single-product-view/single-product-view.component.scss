@@ -185,3 +185,34 @@
     height: 300px;
   }
 }
+
+
+.popup-message {
+  position: absolute;
+  width: 100px;
+  height: 50px;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: $bg-color-sale;
+  color: $text-color-primary;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-size: 14px;
+  opacity: 0.9;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.5s ease-in-out;
+  animation: slideUp 0.5s ease-in-out;
+  z-index: 100000;
+}
+
+@keyframes slideUp {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
+    bottom: 20px;
+    opacity: 0.9;
+  }
+}

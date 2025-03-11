@@ -29,7 +29,7 @@
   
   .progress {
     height: 4px;
-    background: #4CAF50;
+    background: $bg-color-sale;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -53,7 +53,7 @@
   }
   
   .step.active {
-    color: #4CAF50;
+    color: $text-color-sale;
     font-weight: bold;
   }
   
@@ -194,14 +194,19 @@
   }
   
   .next-btn, .place-order-btn {
-    background: #4CAF50;
-    color: white;
+    background: $text-color-sale;
+    color: $text-color-transparent;
     flex: 1;
+    transition: ease-in-out 0.3s;
   }
   
   .next-btn:disabled, .place-order-btn:disabled {
     background: #ccc;
     cursor: not-allowed;
+  }
+
+  .next-btn:hover, .place-order-btn:hover {
+    background: $bg-color-sale;
   }
   
   .review-block {
@@ -214,7 +219,7 @@
   .edit-btn {
     background: none;
     border: none;
-    color: #4CAF50;
+    color: $text-color-sale;
     cursor: pointer;
     font-size: 0.9rem;
     padding: 0;

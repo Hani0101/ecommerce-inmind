@@ -1,3 +1,5 @@
+
+@import '../../../../styles/main.scss';
 .cart-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -122,18 +124,18 @@
   .checkout-btn {
     width: 100%;
     padding: 15px;
-    background: #4CAF50;
-    color: white;
+    background: $text-color-sale;
+    color: $text-color-transparent;
     border: none;
     border-radius: 4px;
     font-size: 1.1rem;
     cursor: pointer;
     margin: 20px 0;
-    transition: background 0.3s;
+    transition: ease-in-out 0.3s;
   }
   
   .checkout-btn:hover {
-    background: #45a049;
+    background: $bg-color-sale;
   }
   
   .checkout-btn:disabled {

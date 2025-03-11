@@ -11,6 +11,13 @@ button {
   transition: ease-in-out 0.3s;
   cursor: pointer;
 
+  @media (max-width: 768px) {
+    width: 136px;
+    height: 30px;
+    margin-top: 12px;
+    font-size: $font-size-xs;
+  }
+
   &.theme-primary {
     background-color: $bg-color-primary;
     color: $text-color-primary;

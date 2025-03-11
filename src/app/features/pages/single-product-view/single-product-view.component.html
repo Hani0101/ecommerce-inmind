@@ -1,5 +1,9 @@
 <!-- Product Container -->
 <div class="product-container">
+
+  <div class="popup-message" *ngIf="showPopup">
+    <p>Item Added to Cart!</p>
+  </div>
   <!-- Image Gallery Section -->
   <div class="image-gallery">
     <div class="main-image" (mouseenter)="enableZoom()" (mouseleave)="disableZoom()" (mousemove)="handleZoom($event)">
@@ -13,6 +17,7 @@
            [alt]="product?.title + ' thumbnail'">
     </div>
   </div>
+
 
   <!-- Product Info Section -->
   <div class="product-info">
@@ -34,7 +39,7 @@
     <p class="description">{{ product?.description }}</p>
 
     <div class="action-buttons">
-      <button class="btn-cart" >
+      <button class="btn-cart" (click)="addToCart(product)">
         Add to Cart
       </button>
       <button mat-icon-button class="wishlist" (click)="toggleWishlist()">
@@ -84,4 +89,3 @@
   </div>
 </div>
 <app-recommended-section [categoryName]="product!.category"></app-recommended-section>
-
