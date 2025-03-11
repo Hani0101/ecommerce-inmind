@@ -8,6 +8,7 @@ import { IProduct } from '../../../shared/models/product';
 import { loadCart, incrementItemQuantity, decrementItemQuantity, removeItemFromCart } from '../../../state/cart.actions';
 import { selectCartItems, selectTotalPrice } from '../../../state/cart.selector';
 import { getTotalprice } from '../../../state/cart.actions';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
@@ -26,6 +27,7 @@ export class CartComponent implements OnInit {
     private store: Store,
     private productService: ProductService,
     private authService: AuthenticationService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -85,5 +87,9 @@ export class CartComponent implements OnInit {
   
   trackByProductId(index: number, item: { product: IProduct; quantity: number }): number {
     return item.product.id;
+  }
+
+  NavigateTocheckout(){
+    this.router.navigate(['/checkout']);
   }
 }

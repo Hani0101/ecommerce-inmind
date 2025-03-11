@@ -45,7 +45,7 @@
         <span>Total</span>
         <span>${{ total | number:'1.2-2' }}</span>
       </div>
-      <button class="checkout-btn" [disabled]="cartItems.length === 0">
+      <button class="checkout-btn" [disabled]="cartItems.length === 0" (click)="NavigateTocheckout()">
         Proceed to Checkout
       </button>
     </div>
