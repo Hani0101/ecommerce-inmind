@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy,ChangeDetectorRef } from '@angular/core';
 import { IProduct } from '../../models/product';
 import { Store } from '@ngrx/store';
 import { addItemToCart } from '../../../state/cart.actions';
@@ -21,6 +21,8 @@ export class ProductCardComponent {
     this._product = value;
     this.productImage = this.calculateProductImage();
   }
+  constructor(private changeDetectorRef: ChangeDetectorRef) { }
+  showPopup = false;
   get product(): IProduct {
     return this._product;
   }
@@ -49,6 +51,13 @@ export class ProductCardComponent {
     };
 
     this.store$.dispatch(addItemToCart({ cartItem }));
+
+    this.showPopup = true;
+
+    setTimeout(() => {
+      this.showPopup = false;
+      this.changeDetectorRef.detectChanges(); 
+    }, 1500);
   }
 
   viewProductDetails() {
