@@ -2,14 +2,13 @@ version: '3.8'
 
 services:
   frontend:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
     container_name: frontend-container
     networks:
       - ecommerce-network
     ports:
       - "80:80"
+    restart: unless-stopped 
 
 networks:
   ecommerce-network:
