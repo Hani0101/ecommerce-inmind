@@ -26,6 +26,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { SharedModule } from './shared/shared.module';
 import { FeaturesModule } from './features/features.module';
+import { ServiceWorkerModule } from '@angular/service-worker';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -46,6 +47,12 @@ import { FeaturesModule } from './features/features.module';
     StoreModule.forRoot({cart: cartReducer}),
     EffectsModule.forRoot([CartEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
   ],
   providers: [
     provideAnimationsAsync('noop'),
